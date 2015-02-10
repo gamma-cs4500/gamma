@@ -2,6 +2,9 @@ package com.gatherfriends.gather.Main;
 
 import java.util.Locale;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.graphics.drawable.LayerDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -13,7 +16,9 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ActionMenuView;
 
+import com.gatherfriends.gather.NewEventWizard.NewEventActivity;
 import com.gatherfriends.gather.R;
 
 
@@ -83,6 +88,35 @@ public class GatherMainActivity extends ActionBarActivity implements ActionBar.T
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_gather_main, menu);
 
+        /**ON CLICK LISTENERS FOR ACTION ITEMS **/
+
+        //Settings Gear Icon
+        MenuItem settings = menu.findItem(R.id.action_settings);
+        settings.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent i = new Intent(activityAccessor(), SettingsActivity.class);
+                startActivity(i);
+                return true;
+            }
+        });
+
+        //New Event Icon
+        MenuItem newEvent = menu.findItem(R.id.action_new);
+        newEvent.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent i = new Intent(activityAccessor(), NewEventActivity.class);
+                startActivity(i);
+                return true;
+            }
+        });
+
+
+        /****************************************/
+
         MenuItem item = menu.findItem(R.id.action_notification);
         LayerDrawable icon = (LayerDrawable) item.getIcon();
 
@@ -90,6 +124,10 @@ public class GatherMainActivity extends ActionBarActivity implements ActionBar.T
         Utils.setBadgeCount(this, icon, mNotificationsCount);
 
         return true;
+    }
+
+    private Activity activityAccessor(){
+        return this;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.gatherfriends.gather.NewEvent;
+package com.gatherfriends.gather.Events;
 
 import java.util.Locale;
 
@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.gatherfriends.gather.R;
 
-public class NewEventActivity extends ActionBarActivity {
+public class EventActivity extends ActionBarActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -40,7 +40,7 @@ public class NewEventActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_event);
+        setContentView(R.layout.activity_event);
 
 
         // Create the adapter that will return a fragment for each of the three
@@ -57,7 +57,7 @@ public class NewEventActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_new_event, menu);
+        getMenuInflater().inflate(R.menu.menu_event, menu);
         return true;
     }
 
@@ -143,7 +143,7 @@ public class NewEventActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_new_event, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_event, container, false);
             return rootView;
         }
     }
