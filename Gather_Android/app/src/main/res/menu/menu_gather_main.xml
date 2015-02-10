@@ -8,7 +8,7 @@
         app:showAsAction="always"/>
 
     <item android:id="@+id/action_notification"
-        android:icon="@drawable/ic_action_event"
+        android:icon="@drawable/ic_menu_notifications"
         android:title="@string/action_notification"
         app:showAsAction="always"/>
 </menu>

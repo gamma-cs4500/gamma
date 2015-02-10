@@ -2,6 +2,7 @@ package com.gatherfriends.gather;
 
 import java.util.Locale;
 
+import android.graphics.drawable.LayerDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -35,6 +36,8 @@ public class GatherMainActivity extends ActionBarActivity implements ActionBar.T
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+
+    int mNotificationsCount = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +85,13 @@ public class GatherMainActivity extends ActionBarActivity implements ActionBar.T
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_gather_main, menu);
+
+        MenuItem item = menu.findItem(R.id.action_notification);
+        LayerDrawable icon = (LayerDrawable) item.getIcon();
+
+        // Update LayerDrawable's BadgeDrawable
+        Utils.setBadgeCount(this, icon, mNotificationsCount);
+
         return true;
     }
 
