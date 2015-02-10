@@ -1,8 +1,10 @@
-package com.gatherfriends.gather;
+package com.gatherfriends.gather.Main;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+
+import com.gatherfriends.gather.R;
 
 public class Utils {
 

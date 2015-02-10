@@ -1,4 +1,4 @@
-package com.gatherfriends.gather;
+package com.gatherfriends.gather.Main;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;

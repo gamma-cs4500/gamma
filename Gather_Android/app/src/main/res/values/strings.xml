@@ -10,9 +10,10 @@
     <string name="settings_fragment">Settings</string>
     <string name="events_fragment">Events</string>
     <string name="discover_fragment">Discover</string>
-
     <string name="action_new">New Event</string>
     <string name="action_notification">Notification</string>
-
+    <string name="title_activity_new_event">NewEventActivity</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="new_events_title">New Event</string>
 
 </resources>

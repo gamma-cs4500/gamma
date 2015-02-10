@@ -1,4 +1,4 @@
-package com.gatherfriends.gather;
+package com.gatherfriends.gather.Main;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,6 +9,8 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+
+import com.gatherfriends.gather.R;
 
 /**
  * Created by scott_000 on 2/10/2015.
