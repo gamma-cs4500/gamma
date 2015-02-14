@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NewEventWizard.NewEventActivity"
+            android:name=".NewShindigWizard.NewShindigActivity"
             android:label="@string/title_activity_new_event" >
         </activity>
         <activity
@@ -28,7 +28,7 @@
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
-            android:name=".Events.EventActivity"
+            android:name=".Shindig.ShindigActivity"
             android:label="@string/title_activity_event" >
         </activity>
     </application>

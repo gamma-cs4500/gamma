@@ -16,9 +16,8 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ActionMenuView;
 
-import com.gatherfriends.gather.NewEventWizard.NewEventActivity;
+import com.gatherfriends.gather.NewShindigWizard.NewShindigActivity;
 import com.gatherfriends.gather.R;
 
 
@@ -108,7 +107,7 @@ public class GatherMainActivity extends ActionBarActivity implements ActionBar.T
 
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Intent i = new Intent(activityAccessor(), NewEventActivity.class);
+                Intent i = new Intent(activityAccessor(), NewShindigActivity.class);
                 startActivity(i);
                 return true;
             }

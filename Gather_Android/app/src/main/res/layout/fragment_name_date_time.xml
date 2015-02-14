@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gatherfriends.gather.NewEventWizard.NameDateTimeFragment"
+    tools:context="com.gatherfriends.gather.NewShindigWizard.NameDateTimeFragment"
     android:layout_gravity="center_horizontal"
     android:paddingLeft="25dp"
     android:paddingRight="25dp"

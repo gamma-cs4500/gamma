@@ -1,4 +1,4 @@
-package com.gatherfriends.gather.NewEventWizard;
+package com.gatherfriends.gather.NewShindigWizard;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

@@ -1,4 +1,4 @@
-package com.gatherfriends.gather.NewEventWizard;
+package com.gatherfriends.gather.NewShindigWizard;
 
 /**
  * Created by scott_000 on 2/10/2015.

@@ -1,4 +1,4 @@
-package com.gatherfriends.gather.NewEventWizard;
+package com.gatherfriends.gather.NewShindigWizard;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,7 +7,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
@@ -17,11 +16,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Filter;
@@ -33,7 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class NewEventActivity extends ActionBarActivity implements IDataWrangler{
+public class NewShindigActivity extends ActionBarActivity implements IDataWrangler{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -69,7 +65,6 @@ public class NewEventActivity extends ActionBarActivity implements IDataWrangler
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        View v = R.layout.fragment_places;
         AutoCompleteTextView autoCompView = (AutoCompleteTextView) findViewById(R.id.autocomplete);
         autoCompView.setAdapter(new PlacesAutoCompleteAdapter(this, R.layout.list_item));
 
