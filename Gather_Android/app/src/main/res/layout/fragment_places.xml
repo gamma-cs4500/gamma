@@ -2,12 +2,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:id="@+id/fragment_places">
 
-    <ListView
-        android:id="@+id/places_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ListView>
+    <AutoCompleteTextView
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:id="@+id/autocomplete"/>
 
 </LinearLayout>

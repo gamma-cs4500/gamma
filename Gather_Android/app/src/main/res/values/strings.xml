@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
-    <string name="places_api_key">AIzaSyCqTDuTW_yD8XP-Bvd5KkzglpAgNePOw6s</string>
-
     <string name="app_name">Gather</string>
     <string name="title_section1">Events</string>
     <string name="title_section2">Discover</string>
