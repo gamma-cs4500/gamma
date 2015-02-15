@@ -65,13 +65,15 @@ public class NewShindigActivity extends ActionBarActivity implements IDataWrangl
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        AutoCompleteTextView autoCompView = (AutoCompleteTextView) findViewById(R.id.autocomplete);
-        autoCompView.setAdapter(new PlacesAutoCompleteAdapter(this, R.layout.list_item));
-
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+    }
+
+    public void attachAutoComplete(){
+        AutoCompleteTextView autoCompView = (AutoCompleteTextView) findViewById(R.id.autocomplete);
+        autoCompView.setAdapter(new PlacesAutoCompleteAdapter(this, R.layout.list_item));
     }
 
 
@@ -170,7 +172,7 @@ public class NewShindigActivity extends ActionBarActivity implements IDataWrangl
                 @Override
                 protected FilterResults performFiltering(CharSequence constraint) {
                     FilterResults filterResults = new FilterResults();
-                    if (constraint != null) {
+                    if (constraint != null && constraint.length()>3) {
                         // Retrieve the autocomplete results.
                         resultList = autocomplete(constraint.toString());
 
@@ -202,8 +204,10 @@ public class NewShindigActivity extends ActionBarActivity implements IDataWrangl
         try {
             StringBuilder sb = new StringBuilder(PLACES_API_BASE + TYPE_AUTOCOMPLETE + OUT_JSON);
             sb.append("?key=" + API_KEY);
-            sb.append("&components;=country:uk");
-            sb.append("&input;=" + URLEncoder.encode(input, "utf8"));
+            sb.append("&input=" + URLEncoder.encode(input, "utf8"));
+          //  sb.append("&location;=42.3581,71.0636");
+          //  sb.append("&radius;=1000");
+
 
             URL url = new URL(sb.toString());
             conn = (HttpURLConnection) url.openConnection();

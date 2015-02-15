@@ -33,4 +33,10 @@ public class PlacesFragment extends Fragment {
 
         return inflater.inflate(R.layout.fragment_places, container, false);
     }
+
+    @Override
+    public void onActivityCreated(Bundle bundle){
+        super.onActivityCreated(bundle);
+        ((NewShindigActivity)d).attachAutoComplete();
+    }
 }

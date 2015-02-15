@@ -7,4 +7,6 @@
     android:layout_height="match_parent"
     android:ellipsize="marquee"
     android:textColor="#000"
-    android:textAlignment="inherit"/>
+    android:textAlignment="inherit"
+    android:padding="15dp"
+    android:textSize="15dp"/>
