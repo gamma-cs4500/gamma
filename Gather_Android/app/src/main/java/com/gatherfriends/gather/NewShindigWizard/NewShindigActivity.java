@@ -2,6 +2,7 @@ package com.gatherfriends.gather.NewShindigWizard;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -9,6 +10,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,12 +20,17 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.Toast;
 
 import com.gatherfriends.gather.R;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,13 +49,19 @@ public class NewShindigActivity extends ActionBarActivity implements IDataWrangl
     SectionsPagerAdapter mSectionsPagerAdapter;
 
     AutoCompleteTextView autoCompView;
+    ArrayList<String> location=new ArrayList<>();
 
     private static final String LOG_TAG = "ExampleApp";
 
     private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
     private static final String OUT_JSON = "/json";
+
+    private static final String GEOCODE_API_BASE = "https://maps.googleapis.com/maps/api/geocode";
+
     private static final String API_KEY = "AIzaSyCqTDuTW_yD8XP-Bvd5KkzglpAgNePOw6s";
+
+    private String chosenItem="";
 
 
     /**
@@ -71,9 +84,112 @@ public class NewShindigActivity extends ActionBarActivity implements IDataWrangl
 
     }
 
+    private class GetLatitudeLongitude extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            ArrayList<String> resultList= new ArrayList<>();
+            HttpURLConnection conn = null;
+            StringBuilder jsonResults = new StringBuilder();
+
+            try {
+                StringBuilder sb = new StringBuilder(GEOCODE_API_BASE + OUT_JSON);
+                sb.append("?key=" + API_KEY);
+                sb.append("&address=" + URLEncoder.encode(chosenItem, "utf8"));
+
+
+                URL url = new URL(sb.toString());
+                conn = (HttpURLConnection) url.openConnection();
+                InputStreamReader in = new InputStreamReader(conn.getInputStream());
+
+                // Load the results into a StringBuilder
+                int read;
+                char[] buff = new char[1024];
+                while ((read = in.read(buff)) != -1) {
+                    jsonResults.append(buff, 0, read);
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                // Create a JSON object hierarchy from the results
+                JSONObject jsonObj = new JSONObject(jsonResults.toString());
+                JSONArray predsJsonArray = jsonObj.getJSONArray("results");
+
+                // Extract the Geocode descriptions from the results
+                resultList = new ArrayList<String>(predsJsonArray.length());
+
+            } catch (JSONException e) {
+                Log.e(LOG_TAG, "Cannot process JSON results", e);
+            }
+
+            return null;
+        }
+
+        protected void onPostExecute(){
+
+        }
+    }
+
+    public ArrayList getLatLongForAddress() {
+        ArrayList<String> resultList= new ArrayList<>();
+        HttpURLConnection conn = null;
+        StringBuilder jsonResults = new StringBuilder();
+
+        try {
+            StringBuilder sb = new StringBuilder(GEOCODE_API_BASE + OUT_JSON);
+            sb.append("?key=" + API_KEY);
+            sb.append("&address=" + URLEncoder.encode(chosenItem, "utf8"));
+
+
+            URL url = new URL(sb.toString());
+            conn = (HttpURLConnection) url.openConnection();
+            InputStreamReader in = new InputStreamReader(conn.getInputStream());
+
+            // Load the results into a StringBuilder
+            int read;
+            char[] buff = new char[1024];
+            while ((read = in.read(buff)) != -1) {
+                jsonResults.append(buff, 0, read);
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            // Create a JSON object hierarchy from the results
+            JSONObject jsonObj = new JSONObject(jsonResults.toString());
+            JSONArray predsJsonArray = jsonObj.getJSONArray("results");
+
+            // Extract the Geocode descriptions from the results
+            resultList = new ArrayList<String>(predsJsonArray.length());
+
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, "Cannot process JSON results", e);
+        }
+
+        return resultList;
+    }
+
     public void attachAutoComplete(){
         AutoCompleteTextView autoCompView = (AutoCompleteTextView) findViewById(R.id.autocomplete);
         autoCompView.setAdapter(new PlacesAutoCompleteAdapter(this, R.layout.list_item));
+        autoCompView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                chosenItem = (String) adapterView.getItemAtPosition(position);
+                new GetLatitudeLongitude().execute();
+            }
+        });
     }
 
 
