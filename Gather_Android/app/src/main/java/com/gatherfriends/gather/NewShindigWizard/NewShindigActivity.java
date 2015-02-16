@@ -9,6 +9,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -35,6 +36,11 @@ import android.widget.Toast;
 import com.gatherfriends.gather.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,6 +74,7 @@ public class NewShindigActivity extends ActionBarActivity implements IDataWrangl
     private String chosenItem="";
 
     ProgressBar progress;
+    GoogleMap mMap;
 
 
     /**
@@ -100,7 +107,6 @@ public class NewShindigActivity extends ActionBarActivity implements IDataWrangl
 
         @Override
         protected Void doInBackground(Void... params) {
-            ArrayList<String> resultList= new ArrayList<>();
             HttpURLConnection conn = null;
             StringBuilder jsonResults = new StringBuilder();
 
@@ -132,64 +138,33 @@ public class NewShindigActivity extends ActionBarActivity implements IDataWrangl
                 // Create a JSON object hierarchy from the results
                 JSONObject jsonObj = new JSONObject(jsonResults.toString());
                 JSONArray predsJsonArray = jsonObj.getJSONArray("results");
+                JSONObject temp = new JSONObject(predsJsonArray.get(0).toString());
+                temp = temp.getJSONObject("geometry");
+                temp = temp.getJSONObject("location");
 
-                // Extract the Geocode descriptions from the results
-                resultList = new ArrayList<String>(predsJsonArray.length());
+                location.add(temp.getString("lat"));
+                location.add(temp.getString("lng"));
+
+
 
             } catch (JSONException e) {
                 Log.e(LOG_TAG, "Cannot process JSON results", e);
             }
 
+            onPostExecute();
             return null;
         }
 
         protected void onPostExecute(){
+            //After we get lat and long for the place, make a marker on the map
+            final float lat = Float.valueOf(location.get(0));
+            final float lng = Float.valueOf(location.get(1));
+            final LatLng USER_INPUT = new LatLng(lat, lng);
 
+            Marker user_input = mMap.addMarker(new MarkerOptions()
+                    .position(USER_INPUT)
+                    .draggable(false));
         }
-    }
-
-    public ArrayList getLatLongForAddress() {
-        ArrayList<String> resultList= new ArrayList<>();
-        HttpURLConnection conn = null;
-        StringBuilder jsonResults = new StringBuilder();
-
-        try {
-            StringBuilder sb = new StringBuilder(GEOCODE_API_BASE + OUT_JSON);
-            sb.append("?key=" + API_KEY);
-            sb.append("&address=" + URLEncoder.encode(chosenItem, "utf8"));
-
-
-            URL url = new URL(sb.toString());
-            conn = (HttpURLConnection) url.openConnection();
-            InputStreamReader in = new InputStreamReader(conn.getInputStream());
-
-            // Load the results into a StringBuilder
-            int read;
-            char[] buff = new char[1024];
-            while ((read = in.read(buff)) != -1) {
-                jsonResults.append(buff, 0, read);
-            }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            // Create a JSON object hierarchy from the results
-            JSONObject jsonObj = new JSONObject(jsonResults.toString());
-            JSONArray predsJsonArray = jsonObj.getJSONArray("results");
-
-            // Extract the Geocode descriptions from the results
-            resultList = new ArrayList<String>(predsJsonArray.length());
-
-        } catch (JSONException e) {
-            Log.e(LOG_TAG, "Cannot process JSON results", e);
-        }
-
-        return resultList;
     }
 
     public void attachAutoComplete(){
@@ -199,9 +174,14 @@ public class NewShindigActivity extends ActionBarActivity implements IDataWrangl
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 chosenItem = (String) adapterView.getItemAtPosition(position);
-                new GetLatitudeLongitude().execute();
+                GetLatitudeLongitude g = new GetLatitudeLongitude();
+                g.execute();
             }
         });
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        SupportMapFragment mapSupportFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
+        mMap = mapSupportFragment.getMap();
     }
 
 
