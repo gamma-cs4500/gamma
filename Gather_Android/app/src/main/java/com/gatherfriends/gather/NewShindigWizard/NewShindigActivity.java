@@ -29,14 +29,10 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.gatherfriends.gather.R;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -48,51 +44,42 @@ import org.json.JSONObject;
 
 public class NewShindigActivity extends ActionBarActivity implements IDataWrangler{
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+    //Used in the slider style android layout
     SectionsPagerAdapter mSectionsPagerAdapter;
+    ViewPager mViewPager;
 
-    AutoCompleteTextView autoCompView;
-    ArrayList<String> location=new ArrayList<>();
 
-    private static final String LOG_TAG = "ExampleApp";
+    private static final String LOG_TAG = "GatherApp";
+
+    /**           GOOGLE API CONSTANTS                **/
 
     private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
     private static final String OUT_JSON = "/json";
-
     private static final String GEOCODE_API_BASE = "https://maps.googleapis.com/maps/api/geocode";
-
     private static final String API_KEY = "AIzaSyCqTDuTW_yD8XP-Bvd5KkzglpAgNePOw6s";
 
-    private String chosenItem="";
+    /***************************************************/
 
+    /**             VARIABLES                 **/
+
+    private String chosenItem="";
+    ArrayList<String> location=new ArrayList<>();
     ProgressBar progress;
     GoogleMap mMap;
 
+    /*******************************************/
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_event);
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
+        //Used for swiping sections of built in Android
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
@@ -107,10 +94,11 @@ public class NewShindigActivity extends ActionBarActivity implements IDataWrangl
 
         @Override
         protected Void doInBackground(Void... params) {
-            HttpURLConnection conn = null;
+            HttpURLConnection conn;
             StringBuilder jsonResults = new StringBuilder();
 
             try {
+                //builds string to be used in API call to Geocode
                 StringBuilder sb = new StringBuilder(GEOCODE_API_BASE + OUT_JSON);
                 sb.append("?key=" + API_KEY);
                 sb.append("&address=" + URLEncoder.encode(chosenItem, "utf8"));
