@@ -38,5 +38,7 @@ public class PlacesFragment extends Fragment {
     public void onActivityCreated(Bundle bundle){
         super.onActivityCreated(bundle);
         ((NewShindigActivity)d).attachAutoComplete();
+
+        ((NewShindigActivity)d).stopLoadingCircle();
     }
 }

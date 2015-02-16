@@ -9,6 +9,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
@@ -21,11 +22,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.gatherfriends.gather.R;
@@ -63,6 +67,8 @@ public class NewShindigActivity extends ActionBarActivity implements IDataWrangl
 
     private String chosenItem="";
 
+    ProgressBar progress;
+
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -71,6 +77,7 @@ public class NewShindigActivity extends ActionBarActivity implements IDataWrangl
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_event);
 
@@ -81,6 +88,11 @@ public class NewShindigActivity extends ActionBarActivity implements IDataWrangl
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        progress = new ProgressBar(this);
+        progress.setIndeterminate(true);
+        progress = (ProgressBar) findViewById(R.id.progress_bar);
+        progress.setVisibility(View.VISIBLE);
 
     }
 
@@ -181,7 +193,7 @@ public class NewShindigActivity extends ActionBarActivity implements IDataWrangl
     }
 
     public void attachAutoComplete(){
-        AutoCompleteTextView autoCompView = (AutoCompleteTextView) findViewById(R.id.autocomplete);
+        final AutoCompleteTextView autoCompView = (AutoCompleteTextView) findViewById(R.id.autocomplete);
         autoCompView.setAdapter(new PlacesAutoCompleteAdapter(this, R.layout.list_item));
         autoCompView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -321,8 +333,8 @@ public class NewShindigActivity extends ActionBarActivity implements IDataWrangl
             StringBuilder sb = new StringBuilder(PLACES_API_BASE + TYPE_AUTOCOMPLETE + OUT_JSON);
             sb.append("?key=" + API_KEY);
             sb.append("&input=" + URLEncoder.encode(input, "utf8"));
-          //  sb.append("&location;=42.3581,71.0636");
-          //  sb.append("&radius;=1000");
+            //  sb.append("&location;=42.3581,71.0636");
+            //  sb.append("&radius;=1000");
 
 
             URL url = new URL(sb.toString());
@@ -362,6 +374,10 @@ public class NewShindigActivity extends ActionBarActivity implements IDataWrangl
         }
 
         return resultList;
+    }
+
+    public void stopLoadingCircle(){
+        progress.setVisibility(View.INVISIBLE);
     }
 
 }
