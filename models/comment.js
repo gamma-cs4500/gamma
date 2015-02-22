@@ -1,8 +1,4 @@
 "use strict";
-
-// Comment has:
-// user_id, game_id, comment, Date
-
 module.exports = function(sequelize, DataTypes) {
   var Comment = sequelize.define("Comment", {
     comment: DataTypes.STRING,
@@ -10,10 +6,9 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        
+        // associations can be defined here
       }
     }
   });
-
   return Comment;
 };

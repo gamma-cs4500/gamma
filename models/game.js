@@ -1,16 +1,11 @@
 "use strict";
-
-// Game has:
-// Name, Date, Short Description, Long Description, Users, Tags, 
-// Files, Ratings, Visibility, License, Genre, Platform
-
 module.exports = function(sequelize, DataTypes) {
   var Game = sequelize.define("Game", {
     name: DataTypes.STRING,
     uploadDate: DataTypes.DATE,
     shortDesc: DataTypes.STRING,
     longDesc: DataTypes.STRING,
-    visiblity: DataTypes.ENUM("private", "public", "neu")
+    visibility: DataTypes.ENUM('private', 'public', 'neu')
   }, {
     classMethods: {
       associate: function(models) {
@@ -24,6 +19,5 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
-
   return Game;
 };

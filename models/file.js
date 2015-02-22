@@ -1,8 +1,4 @@
 "use strict";
-
-// File has:
-// game_id, type, path
-
 module.exports = function(sequelize, DataTypes) {
   var File = sequelize.define("File", {
     type: DataTypes.ENUM('exec', 'doc', 'src'),
@@ -10,10 +6,9 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        
+        // associations can be defined here
       }
     }
   });
-
   return File;
 };

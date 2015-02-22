@@ -1,8 +1,4 @@
 "use strict";
-
-// Platform has:
-// type, name
-
 module.exports = function(sequelize, DataTypes) {
   var Platform = sequelize.define("Platform", {
     type: DataTypes.ENUM('desktop', 'mobile', 'console'),
@@ -10,10 +6,9 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        
+        // associations can be defined here
       }
     }
   });
-
   return Platform;
 };
