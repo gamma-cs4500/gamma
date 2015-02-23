@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Gather</string>
+    <string name="title_section1">Events</string>
+    <string name="title_section2">Discover</string>
+    <string name="title_section3">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="settings_fragment">Settings</string>
+    <string name="events_fragment">Events</string>
+    <string name="discover_fragment">Discover</string>
+    <string name="action_new">New Event</string>
+    <string name="action_notification">Notification</string>
+    <string name="title_activity_new_event">NewEventActivity</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="new_events_title">New Event</string>
+    <string name="title_activity_event">EventActivity</string>
+
+</resources>
