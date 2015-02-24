@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "erg0dic",
+    "username": "root",
     "password": null,
-    "database": "c9",
+    "database": "test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
