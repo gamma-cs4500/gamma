@@ -16,16 +16,27 @@ module.exports = function(passport){
   /* GET login page. */
   router.get('/login', function(req, res) {
     console.log("hello login");
+    debugger;
     // Display the Login page with any flash message, if any
     res.render('index', { message: req.flash('message') });
   });
 
   /* Handle Login POST */
-  router.post('/login', passport.authenticate('login', {
+  router.post('/login', passport.authenticate('login'),
+  /* {
     successRedirect: '/',
-    failureRedirect: '/',
+    failureRedirect: '/login',
     failureFlash : true
-  }));
+  }
+  */
+
+  //)
+  function(req, res) {
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+    res.redirect('/users/' + req.user.username);
+  }
+  );
 
   /* GET Registration Page */
   router.get('/signup', function(req, res){
