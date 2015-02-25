@@ -15,16 +15,19 @@ module.exports = function(passport){
 
   /* GET login page. */
   router.get('/login', function(req, res) {
-    console.log("hello login");
     res.render('index', { message: req.flash('message') });
   });
 
   /* Handle Login POST */
-  router.post('/login', passport.authenticate('login', {
-      successRedirect: '/',
-      failureRedirect: '/login',
-      failureFlash : true
-  }));
+  router.post('/login', passport.authenticate('login'),
+    function(req, res) {
+      res.json({ success: true });
+    });
+
+  router.get('/logout', function(req, res){
+    req.logout();
+    res.json({ messsage: 'Logged out' });
+  });
 
   /* GET Registration Page */
   router.get('/signup', function(req, res){
