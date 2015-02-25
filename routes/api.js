@@ -8,8 +8,8 @@ var isAuthenticated = function (req, res, next) {
   // request and response objects
   if (req.isAuthenticated())
     return next();
-  // if the user is not authenticated then redirect him to the login page
-  res.redirect('/');
+  else
+    return res.sendStatus(401);
 }
 
 module.exports = function(passport) {
@@ -28,17 +28,22 @@ module.exports = function(passport) {
       where: {username: req.body.username},
       defaults: {username: req.body.username, password: req.body.password}
     }).spread(function(user, created) {
-        if (!created) {
-          res.json({
-              success: false,
-              message: 'User exists'
-          });
-        } 
-        req.login(user, function (err) {
-          if (err) throw err;
-          res.json({ success: true });
+      if (!created) {
+        res.json({
+            success: false,
+            message: 'User exists'
         });
+      } 
+
+      req.login(user, function (err) {
+        if (err) throw err;
+        res.json({ success: true });
+      });
     });
+  });
+
+  router.get('/self', isAuthenticated, function(req, res) {
+      res.json({ user: req.user });
   });
 
   return router;
