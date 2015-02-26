@@ -88,6 +88,7 @@
 								<li class="active"><a href="index.html">Home</a></li>
 								<li><a href="game-page.html">Game Page</a></li>
 								<li><a href="new-game.html">New Game</a></li>
+                                <li><button onclick="signout()">Signout</button></li>
 							</ul>
 						</nav>
 					</div>
@@ -152,6 +153,26 @@
 				</div>
 			</div>
 		</div>
+
+    <script>
+        var BASE_SERVER_URL = "http://localhost:3000";
+        function signout(){
+            var base = (window.location.href).split("index");
+            var baseUrl = base[0];
+            var user = $('#user').val();
+            var pass = $('#pass').val();
+            $.ajax({
+                type: "POST",
+                url: BASE_SERVER_URL+"/api/logout",
+                data: {username:user, password:pass},
+                success: function(){
+                    window.location.href=baseUrl+"login.html";
+                },
+                error: function(){
+                }
+            });
+        }
+    </script>
 
 	</body>
 </html>
