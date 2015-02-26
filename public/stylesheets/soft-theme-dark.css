@@ -1,0 +1,22 @@
+
+/* MAIN THEME */
+.cntnr > .left > .logo { background: #282828 !important; }
+.cntnr > .right > .nav { background: #282828 !important; }
+
+/* SIDEBAR */
+.cntnr > .left {background:#3C3C3C !important; box-shadow: inset -10px 0px 20px -10px #222 !important;  }
+.sidebar .accordion a { color:#CCC !important; box-shadow: inset -10px 0px 20px -10px #222 !important; }
+.sidebar .accordion-heading a { background:#3C3C3C !important; border-bottom: 1px solid #2C2C2C !important; }
+.sidebar .accordion-heading a:hover { background:#444 !important; border-left: 4px solid #6F9FC8 !important;  border-bottom: 1px solid #2C2C2C !important; color:#FFF !important; }
+.sidebar .accordion-body a { background:#555 !important; border-bottom-color:#2C2C2C !important; color:#CCC !important; }
+.sidebar .accordion-body a:last-child { border-bottom:1px solid #2C2C2C !important; }
+.sidebar .accordion-body a:hover { border-left: 4px solid #6F9FC8 !important; border-bottom-color:#2C2C2C !important; color:#FFF !important;  }
+.sidebar .accordion-heading .sbtn.active { border-left: 4px solid #6F9FC8 !important; color:#FFF !important;}
+.sidebar .accordion-body .sbtn.active { border-left: 4px solid #6F9FC8 !important; color:#FFF !important;}
+
+/* HOV -> DROPDOWNS */
+.hov .con:focus {  color:#FFF !important; background:#6F9FC8 !important; }
+
+/* HEADER -> NAV PILLS */
+.bar .nav-pills > li.active > a { background:#444 !important; }
+.bar .nav-pills > li > a:hover, .bar .nav-pills > li > a:focus { background:#444 !important; }

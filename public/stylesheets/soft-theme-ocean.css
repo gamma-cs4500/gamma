@@ -1,0 +1,21 @@
+/* OCEAN THEME */
+.cntnr > .left > .logo { background: #7DB4D8 !important; }
+.cntnr > .right > .nav { background: #7DB4D8 !important; }
+.cntnr > .left {background:#999999 !important; box-shadow: inset -10px 0px 20px -10px #777 !important;  }
+
+/* SIDEBAR */
+.sidebar .accordion a { color:#FFFFFF !important; box-shadow: inset -10px 0px 20px -10px #777 !important; }
+.sidebar .accordion-heading a { background:#999999 !important; border-bottom: 1px solid #909090 !important; }
+.sidebar .accordion-heading a:hover { background:#888888 !important; border-left: 4px solid #BEE3BE !important;  border-bottom: 1px solid #909090 !important; color:#BEE3BE !important; }
+.sidebar .accordion-body a { background:#AAA !important; border-bottom-color:#909090 !important; color:#FFF !important; }
+.sidebar .accordion-body a:last-child { border-bottom:1px solid #909090 !important; }
+.sidebar .accordion-body a:hover { border-left: 4px solid #BEE3BE !important; border-bottom-color:#909090 !important; color:#BEE3BE !important;  }
+.sidebar .accordion-heading .sbtn.active { border-left: 4px solid #BEE3BE !important; color:#BEE3BE !important;}
+.sidebar .accordion-body .sbtn.active { border-left: 4px solid #BEE3BE !important; color:#BEE3BE !important;}
+
+/* HOV -> DROPDOWNS */
+.hov .con:focus {  color:#FFF !important; background:#999999 !important; }
+
+/* HEADER -> NAV PILLS */
+.bar .nav-pills > li.active > a { background:#6F9FC8 !important; }
+.bar .nav-pills > li > a:hover, .bar .nav-pills > li > a:focus { background:#6F9FC8 !important; }
