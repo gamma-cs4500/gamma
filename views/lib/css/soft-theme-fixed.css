@@ -1,0 +1,12 @@
+/* FIXED */
+.left { position:fixed !important; }
+.right > .nav { position:fixed !important; z-index:500 !important; }
+.right > .content { padding-top:110px !important; }
+.right { padding-left:200px !important; }
+@media (max-width: 767px) {
+  .right { padding-left:0px !important; }
+  .hov { right:0px !important; }
+}
+#secondary { z-index:501 !important; }
+#secondary-search { z-index:501 !important; }
+.hov { z-index:502 !important; position:absolute; right:200px; }
