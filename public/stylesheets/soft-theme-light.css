@@ -1,0 +1,22 @@
+
+/* MAIN THEME */
+.cntnr > .left > .logo { background: #87796D !important; }
+.cntnr > .right > .nav { background: #87796D !important; }
+
+/* SIDEBAR */
+.cntnr > .left {background:#D7D5C9 !important; box-shadow: inset -10px 0px 20px -10px #948B7C !important;  }
+.sidebar .accordion a { color:#948B7C !important; box-shadow: inset -10px 0px 20px -10px #948B7C !important; }
+.sidebar .accordion-heading a { background:#D7D5C9 !important; border-bottom: 1px solid #B5A998 !important; }
+.sidebar .accordion-heading a:hover { background:#CFCDC1 !important; border-left: 4px solid #6B645B !important;  border-bottom: 1px solid #B5A998 !important; color:#6B645B !important; }
+.sidebar .accordion-body a { background:#E5E3D7 !important; border-bottom-color:#B5A998 !important; color:#948B7C !important; }
+.sidebar .accordion-body a:last-child { border-bottom:1px solid #B5A998 !important; }
+.sidebar .accordion-body a:hover { border-left: 4px solid #6B645B !important; border-bottom-color:#B5A998 !important; color:#6B645B !important;  }
+.sidebar .accordion-heading .sbtn.active { border-left: 4px solid #6B645B !important; color:#6B645B !important;}
+.sidebar .accordion-body .sbtn.active { border-left: 4px solid #6B645B !important; color:#6B645B !important;}
+
+/* HOV -> DROPDOWNS */
+.hov .con:focus {  color:#FFF !important; background:#6F9FC8 !important; }
+
+/* HEADER -> NAV PILLS */
+.bar .nav-pills > li.active > a { background:#6B645B !important; }
+.bar .nav-pills > li > a:hover, .bar .nav-pills > li > a:focus { background:#6B645B !important; }
