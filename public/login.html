@@ -3,13 +3,13 @@
  <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login // Soft Admin</title>
-  
+
   <!-- Default Styles (DO NOT TOUCH) -->
   <link rel="stylesheet" href="stylesheets/font-awesome.min.css">
   <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
   <link rel="stylesheet" href="stylesheets/fonts.css">
   <link type="text/css" rel="stylesheet" href="stylesheets/soft-admin.css"/>
-  
+
   <!-- Adjustable Styles -->
   <link type="text/css" rel="stylesheet" href="stylesheets/icheck.css?v=1.0.1">
   <style>
@@ -37,7 +37,7 @@
     border-bottom-right-radius: 5px;
    }
   </style>
-  
+
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
    <script src="lib/js/html5shiv.js"></script>
@@ -49,10 +49,10 @@
   <div id="log-tbl">
    <div id="log-contain">
 
-    
+
     <div id="logo" style="z-index:100;"><h1 style="color:#f9f9f9; ">Gamma</h1></div>
-    
-    
+
+
     <div id="login">
 
      <form id="login-form" class="form">
@@ -75,15 +75,15 @@
       </div>
 
       <div class="form-group">
-       <button type="submit" id="login-btn" class="btn btn-primary btn-block btn-lg" onclick="login()">Login&nbsp;&nbsp;&nbsp;</button>
+       <button type="submit" id="login-btn" class="btn btn-primary btn-block btn-lg">Login&nbsp;&nbsp;&nbsp;</button>
       </div>
-      
+
      </form>
 
     </div>
 
-     
-    
+
+
     <div class="tbl">
         <div class="form-group">
             <button type="submit" id="create-btn" class="btn btn-primary btn-block btn-lg" onclick="signup()">Create Account&nbsp;&nbsp;&nbsp;</button>
@@ -91,13 +91,13 @@
     </div>
 
    </div>
-    
+
   </div>
-  
+
   <!-- Default JS (DO NOT TOUCH) -->
   <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
-  
+
   <!-- Adjustable JS -->
   <script src="js/icheck.js"></script>
   <script>
@@ -115,9 +115,15 @@
                   window.location.href=baseUrl+"index.html";
               },
               error: function(){
+                  window.location.href = window.location.href + "?";
               }
           });
       }
+
+      $("#login-btn").on('click', function (evt) {
+        evt.preventDefault();
+        login();
+      })
 
       function signup(){
           var base = (window.location.href).split("login");
@@ -147,7 +153,7 @@
      radioClass: 'iradio_flat-purple'
     });
    });
-    
+
   </script>
 
  </body>
