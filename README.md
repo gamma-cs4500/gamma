@@ -12,3 +12,7 @@
 + `./bin/www`
 + The app will be available at http://localhost:3000/
 + You can login at http://localhost:3000/login.html
+
+## Testing
++ sudo npm install -g mocha
++ mocha
