@@ -34,11 +34,12 @@ module.exports = function(passport) {
             message: 'User exists'
         });
       } 
-
-      req.login(user, function (err) {
-        if (err) throw err;
-        res.json({ success: true });
-      });
+      else {
+          req.login(user, function (err) {
+            if (err) throw err;
+            res.json({ success: true });
+          });
+      }
     });
   });
 
