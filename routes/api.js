@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models');
+var bcrypt = require('bcrypt');
 
 var isAuthenticated = function (req, res, next) {
   // if user is authenticated in the session, call the next() to call the next request handler
@@ -24,24 +25,31 @@ module.exports = function(passport) {
 
   /* Handle Registration POST */
   router.post('/signup', function(req, res) {
-    models.User.findOrCreate({
-      where: {username: req.body.username},
-      defaults: {username: req.body.username, password: req.body.password}
-    }).spread(function(user, created) {
-      if (!created) {
-        res.json({
-            success: false,
-            message: 'User exists'
+    bcrypt.genSalt(10, function(err, salt) {
+      bcrypt.hash(req.body.password, salt, function (err, hash) {
+        password_hash = hash;
+
+        models.User.findOrCreate({
+          where: {username: req.body.username},
+          defaults: {username: req.body.username, password: password_hash}
+        }).spread(function(user, created) {
+          if (!created) {
+            res.json({
+                success: false,
+                message: 'User exists'
+            });
+          } else {
+              req.login(user, function (err) {
+                if (err) throw err;
+                res.json({ success: true });
+              });
+          }
         });
-      } 
-      else {
-          req.login(user, function (err) {
-            if (err) throw err;
-            res.json({ success: true });
-          });
-      }
+      });
+      });
     });
-  });
+
+
 
   router.get('/self', isAuthenticated, function(req, res) {
       res.json({ user: req.user });

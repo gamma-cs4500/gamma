@@ -1,5 +1,6 @@
 var LocalStrategy = require('passport-local').Strategy;
 var models = require('../models');
+var bcrypt = require('bcrypt');
 
 module.exports = function(passport) {
   // Passport needs to be able to serialize and deserialize users to support persistent login sessions
@@ -16,10 +17,6 @@ module.exports = function(passport) {
     );
   });
 
-  function isValidPassword(user, password) {
-    return user.password === password;
-  }
-
   passport.use('login', new LocalStrategy({
           passReqToCallback : true
       },
@@ -29,11 +26,15 @@ module.exports = function(passport) {
               return done(null, false, {'message': 'Incorrect username'});
             }
 
-            if (!isValidPassword(user, password)) {
-              return done(null, false, {'message': 'Invalid password'});
-            }
+            bcrypt.compare(password, user.password, function(err, res) {
+              isValidPassword = res;
 
-            return done(null, user);
+              if (!isValidPassword) {
+                return done(null, false, {'message': 'Invalid password'});
+              } else {
+                return done(null, user);
+              }
+            });
           });
       })
   );
