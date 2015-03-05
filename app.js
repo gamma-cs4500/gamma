@@ -36,8 +36,10 @@ initPassport(passport);
 
 var routes = require('./routes/index');
 var api = require('./routes/api')(passport);
+var game = require('./routes/game');
 app.use('/', routes);
 app.use('/api', api);
+app.use('/game', game);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
