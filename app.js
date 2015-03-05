@@ -10,6 +10,7 @@ var localStrategy = require('passport-local').Strategy;
 var session = require('express-session')
 var flash = require("connect-flash");
 var cors = require('cors');
+var bcrypt = require('bcrypt');
 
 var app = express();
 
