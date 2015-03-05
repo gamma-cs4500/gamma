@@ -23,7 +23,6 @@ module.exports = function(passport) {
       function(req, username, password, done) {
           models.User.find({ where: {'username': username} }).then(function(user) {
             if (!user) {
-              console.log("invalid password");
               return done(null, false, {'message': 'Incorrect username'});
             }
 

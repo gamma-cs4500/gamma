@@ -34,7 +34,6 @@ module.exports = function(passport) {
           defaults: {username: req.body.username, password: password_hash}
         }).spread(function(user, created) {
           if (!created) {
-            console.log("not created");
             res.json({
                 success: false,
                 message: 'User exists'
