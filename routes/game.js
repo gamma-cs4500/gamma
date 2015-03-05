@@ -27,11 +27,25 @@ router.post('/', function(req, res) {
 router.put('/:id', function(req, res) {
   models.Game.find(req.param('id')).then(function(game) {
     game.updateAttributes({
-      // not finished
+      name: req.body.name,
+      shortDesc: req.body.shortDesc,
+      longDesc: req.body.longDesc,
+      visibility: req.body.visibility
     }).success(function() {
       res.json({success: true})
     });
   });
-})
+});
+
+/* DELETE game */
+router.delete('/:id', function(req, res) {
+  models.Game.find(req.param('id')).then(function(game) {
+    game.destroy().then(function() {
+      res.json({success: true});
+    });
+  }).catch(function(e) {
+      res.json({success: false, message: "Unable to delete game"});
+  });
+});
 
 module.exports = router;
