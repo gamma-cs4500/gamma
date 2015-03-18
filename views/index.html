@@ -80,22 +80,6 @@
             clear:both;
         }
     </style>
-    <script>
-        var GameTile = React.createClass({
-            render: function() {
-                return (
-                        <section class="4u">
-                            <a href="#" class="image featured"><img src=this.props.imgSrc, alt=""></a>
-                            <div class="box">
-                                <h2>this.props.gameTitle</h2>
-                                <p>this.props.description</p>
-                                <a href="/game" class="button">More</a>
-                            </div>
-                        </section>
-                );
-            }
-        });
-    </script>
 	<body>
 
 		<!-- Wrapper -->
@@ -201,12 +185,29 @@
         }
     </script>
 
-    <script>
-        var obj = new JSON({items:[
+    <script type="text/jsx">
+        var GameTile = React.createClass({
+            render: function() {
+                return (
+                        <section class="4u">
+                            <a href="#" class="image featured">
+                              <img src={this.props.imgSrc} alt=""></img>
+                            </a>
+                            <div class="box">
+                              <h2>{this.props.gameTitle}</h2>
+                              <p>{this.props.description}</p>
+                                <a href="/game" class="button">More</a>
+                            </div>
+                        </section>
+                );
+            }
+        });
+
+        var obj = {items:[
             {"gameTitle":"Game 1", "description":"This is game 1", imgSrc:"/assets/images/pic01.jpg"},
             {"gameTitle":"Game 2", "description":"This is game 2", imgSrc:"/assets/images/pic02.jpg"},
             {"gameTitle":"Game 3", "description":"This is game 3", imgSrc:"/assets/images/pic03.jpg"}
-        ]});
+        ]};
 
         var j = 0;
         var rows = 99;
@@ -219,8 +220,11 @@
             }
 
             React.render(
-            <GameTile gameTitle:{temp.gameTitle} description:{temp.description} imgSrc:{temp.imgSrc}/>,
-                    document.getElementById(''+rows);
+              <GameTile 
+                gameTitle={temp.gameTitle} 
+                description={temp.description} 
+                imgSrc={temp.imgSrc}/>,
+                document.getElementById(''+rows)
             );
         }
     </script>
