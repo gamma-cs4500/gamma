@@ -5,11 +5,13 @@ var app = require('../app.js');
 
 // Namespace for LoginFlow tests
 describe('LoginFlow', function () {
+  this.timeout(5000);
   
   // Run this before each test in LoginFlow
   beforeEach(function (done) {
     // Create fake users
     models.sequelize.sync({force: true, logging: false})
+    debugger
         .then(function() {
             var jamel = {username: 'jamel', password: 'jamel'};
             var basel = {username: 'basel', password: 'basel'};
@@ -47,5 +49,42 @@ describe('LoginFlow', function () {
             .expect(401, done);
             //.expect({'success': false, 'message': 'Invalid password'}, done);
       });
+  });
+
+    describe('Login bad username', function() {
+      it('Should fail since username does not exist', function(done) {
+          request(app)
+            .post('/api/login')
+            .send({'username': 'scott', 'password': 'doesntmatter'})
+            .expect(401, done);
+    });
+  });
+
+});
+
+// Namespace for LogoutFlow tests
+describe('LogoutFlow', function () {
+  this.timeout(5000);
+  
+  // Run this before each test in LogoutFlow
+  beforeEach(function (done) {
+    // Create fake users
+    models.sequelize.sync({force: true, logging: false})
+        .then(function() {
+            var jamel = {username: 'jamel', password: 'jamel'};
+            var basel = {username: 'basel', password: 'basel'};
+            var ryan = {username: 'ryan', password: 'ryan'};
+            models.User.bulkCreate([jamel, basel, ryan]);
+        })
+        .then(done);
+  });
+
+  describe('Logout existing user', function() {
+    it('Should successfully logout', function(done) {
+      request(app)
+        .post('/api/logout')
+        .send({'username': 'jamel', 'password': 'jamel'})
+        .expect(200, done);
+    });
   });
 });
