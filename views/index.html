@@ -16,8 +16,7 @@
 		<script src="/js/skel.min.js"></script>
 		<script src="/js/skel-layers.min.js"></script>
 		<script src="/js/init.js"></script>
-        <script src="/js/react.js"></script>
-        <script src="/js/JSXTransformer.js"></script>
+
 
 		<noscript>
 			<link rel="stylesheet" href="/stylesheets/skel.css" />
@@ -209,25 +208,35 @@
             {"gameTitle":"Game 3", "description":"This is game 3", imgSrc:"/assets/images/pic03.jpg"}
         ]};
 
-        var j = 0;
+        var gamesInRow = 0;
         var rows = 99;
+        var container = document.getElementById("gameContainer");
+        var el = React.createElement('div', {className:'row no-collapse-1', id:''+rows});
+        React.render(el, container);
+
         for(var i = 0; i < obj.items.length; i++){
             var temp = obj.items[i];
-            if(j==3||j==0){
+            if(gamesInRow==3){
                 rows+=1;
                 var container = document.getElementById("gameContainer");
-                container.innerHTML = container.innerHTML+"<div class='row no-collapse-1' id=''+rows></div>"
+                var el = React.createElement('div', {className:'row no-collapse-1', id:''+rows});
+                React.render(el, container);
+                gamesInRow = 0;
             }
+            console.log(document.getElementById(''+rows));
 
             React.render(
-              <GameTile 
-                gameTitle={temp.gameTitle} 
-                description={temp.description} 
-                imgSrc={temp.imgSrc}/>,
-                document.getElementById(''+rows)
+                <GameTile 
+                  gameTitle={temp.gameTitle} 
+                  description={temp.description} 
+                  imgSrc={temp.imgSrc}/>,
+              document.getElementById(''+rows)
             );
+            gamesInRow += 1;
         }
     </script>
+    <script src="/js/react.js"></script>
+    <script src="/js/JSXTransformer.js"></script>
 
 	</body>
 </html>
