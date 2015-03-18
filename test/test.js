@@ -2,6 +2,7 @@ var assert = require('assert');
 var request = require('supertest');
 var models = require('../models');
 var app = require('../app.js');
+var bcrypt = require('bcrypt');
 
 // Namespace for LoginFlow tests
 describe('LoginFlow', function () {
@@ -11,11 +12,11 @@ describe('LoginFlow', function () {
   beforeEach(function (done) {
     // Create fake users
     models.sequelize.sync({force: true, logging: false})
-    debugger
         .then(function() {
-            var jamel = {username: 'jamel', password: 'jamel'};
-            var basel = {username: 'basel', password: 'basel'};
-            var ryan = {username: 'ryan', password: 'ryan'};
+            var salt = bcrypt.genSaltSync(10);
+            var jamel = {username: 'jamel', password: bcrypt.hashSync('jamel', salt)};
+            var basel = {username: 'basel', password: bcrypt.hashSync('basel', salt)};
+            var ryan = {username: 'ryan', password: bcrypt.hashSync('ryan', salt)};
             models.User.bulkCreate([jamel, basel, ryan]);
         })
         .then(done);
