@@ -39,20 +39,18 @@ module.exports = function(passport) {
                 message: 'User exists'
             });
           } else {
-              req.login(user, function (err) {
-                if (err) throw err;
+            req.login(user, function (err) {
+              if (err) throw err;
                 res.json({ success: true });
-              });
+            });
           }
         });
       });
-      });
     });
-
-
+  });
 
   router.get('/self', isAuthenticated, function(req, res) {
-      res.json({ user: req.user });
+    res.json({ user: req.user });
   });
 
   return router;
