@@ -163,7 +163,8 @@
 				</div>
 			</div>
 		</div>
-
+        <script src="../public/js/react.js"></script>
+        <script src="../public/js/JSXTransformer.js"></script>
     <script>
         var BASE_SERVER_URL = "http://localhost:3000";
         function signout(){
@@ -185,6 +186,7 @@
     </script>
 
     <script type="text/jsx">
+
         var GameTile = React.createClass({
             render: function() {
                 return (
@@ -210,17 +212,28 @@
 
         var gamesInRow = 0;
         var rows = 99;
-        var container = document.getElementById("gameContainer");
-        var el = React.createElement('div', {className:'row no-collapse-1', id:''+rows});
-        React.render(el, container);
+
+        var createRow = function(){
+            rows+=1;
+            var container = document.getElementById("gameContainer");
+            var ele = document.createElement("div");
+            ele.setAttribute("class", 'row no-collapse-1');
+
+            for(var j = 0; j < 3; j++){
+                var item = document.createElement("div");
+                item.setAttribute("id", ''+rows+'.'+(j+1));
+                ele.appendChild(item);
+            }
+
+            container.appendChild(ele);
+        }
+
+        createRow();
 
         for(var i = 0; i < obj.items.length; i++){
             var temp = obj.items[i];
             if(gamesInRow==3){
-                rows+=1;
-                var container = document.getElementById("gameContainer");
-                var el = React.createElement('div', {className:'row no-collapse-1', id:''+rows});
-                React.render(el, container);
+                createRow();
                 gamesInRow = 0;
             }
             console.log(document.getElementById(''+rows));
@@ -230,13 +243,11 @@
                   gameTitle={temp.gameTitle} 
                   description={temp.description} 
                   imgSrc={temp.imgSrc}/>,
-              document.getElementById(''+rows)
+              document.getElementById(''+rows+(i+1))
             );
             gamesInRow += 1;
         }
     </script>
-    <script src="/js/react.js"></script>
-    <script src="/js/JSXTransformer.js"></script>
 
 	</body>
 </html>
