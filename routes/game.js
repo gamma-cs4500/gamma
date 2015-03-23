@@ -3,6 +3,29 @@ var router = express.Router();
 var models = require('../models');
 
 // should be in api endpoint. not necessarily in api.js file, but at /api/games/1 endpoint
+var isAuthenticated = function (req, res, next) {
+  // if user is authenticated in the session, call the next() to call the next request handler
+  // Passport adds this method to request object. A middleware is allowed to add properties to
+  // request and response objects
+  if (req.isAuthenticated())
+    return next();
+  else
+    return res.sendStatus(401);
+}
+
+var isOwner = function (req, res, next) {
+  debugger;
+  Game.find(req.param('id')).then(function (game) {
+
+    if (req.user.id == game.getUser().id) {
+      return next();
+    } else {
+      return res.sendStatus(401);
+    }
+  });
+}
+
+
 
 /* GET game */
 router.get('/:id', function(req, res) {
@@ -12,7 +35,7 @@ router.get('/:id', function(req, res) {
 });
 
 /* POST game */
-router.post('/', function(req, res) {
+router.post('/', isAuthenticated, function(req, res) {
   models.Game.create({
     name: req.body.name,
     shortDesc: req.body.shortDesc,
@@ -24,7 +47,7 @@ router.post('/', function(req, res) {
 });
 
 /* PUT game */
-router.put('/:id', function(req, res) {
+router.put('/:id', isAuthenticated, function(req, res) {
   models.Game.find(req.param('id')).then(function(game) {
     game.updateAttributes({
       name: req.body.name,
@@ -38,7 +61,7 @@ router.put('/:id', function(req, res) {
 });
 
 /* DELETE game */
-router.delete('/:id', function(req, res) {
+router.delete('/:id', isOwner, function(req, res) {
   models.Game.find(req.param('id')).then(function(game) {
     game.destroy().then(function() {
       res.json({success: true});
