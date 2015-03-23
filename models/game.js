@@ -25,10 +25,6 @@ module.exports = function(sequelize, DataTypes) {
           return prev + cur.rating;
         }, 0);
         return sum / ratings.length;
-      },
-      hasUser: function(user) {
-        var users = this.getUsers();
-        return user.equalsOneOf(users);
       }
     }
   });
