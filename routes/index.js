@@ -9,19 +9,6 @@ module.exports = function(passport) {
     res.render('index');
   });
 
-  router.get('/game/:id', function(req, res, next) {
-    models.Game.find(req.params.id).then(function(game) {
-        if (game == null)
-          res.redirect(301, '/');
-
-        var params = {
-          'game': game, 
-          'user': req.params.user
-        };
-        res.render('game-page', params);
-    });
-  });
-
   router.get('/game/new', passport.loginRequired, function(req, res, next) {
     models.License.findAll().then(function(licenses) {
       models.Genre.findAll().then(function(genres) {
@@ -34,6 +21,19 @@ module.exports = function(passport) {
           res.render('new-game', params);
         });
       });
+    });
+  });
+
+  router.get('/game/:id', function(req, res, next) {
+    models.Game.find(req.params.id).then(function(game) {
+        if (game == null)
+          res.redirect(301, '/');
+
+        var params = {
+          'game': game, 
+          'user': req.params.user
+        };
+        res.render('game-page', params);
     });
   });
 
