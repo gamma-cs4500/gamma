@@ -13,9 +13,6 @@ module.exports = function(sequelize, DataTypes) {
           Game.hasMany(models.Tag);
           Game.hasMany(models.File);
           Game.hasMany(models.Rating);
-          Game.hasOne(models.License);
-          Game.hasMany(models.Genre);
-          Game.hasMany(models.Platform);
       }
     }
   });
