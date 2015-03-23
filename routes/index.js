@@ -26,14 +26,27 @@ module.exports = function(passport) {
 
   router.get('/game/:id', function(req, res, next) {
     models.Game.find(req.params.id).then(function(game) {
-        if (game == null)
-          res.redirect(301, '/');
+      var user = req.user;
+      var params = {
+        'game': game, 
+        'user': user
+      };
 
-        var params = {
-          'game': game, 
-          'user': req.params.user
-        };
-        res.render('game-page', params);
+      if (game == null)
+        res.redirect(301, '/');
+
+      if (game.visibility == 'private') {
+        console.log(user);
+        console.log(game.hasUser(user));
+        if (!game.hasUser(user))
+          res.redirect(301, '/');
+      }
+      else if (game.visibility == 'neu') {
+        if (!user.hasNEUEmail())
+          res.redirect(301, '/');
+      }
+
+      res.render('game-page', params);
     });
   });
 
