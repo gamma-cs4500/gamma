@@ -15,8 +15,9 @@ var isAuthenticated = function (req, res, next) {
 
 var isOwner = function (req, res, next) {
   debugger;
-  Game.find(req.param('id')).then(function (game) {
-
+  models.Game.find(req.param('id')).then(function (game) {
+    console.log(req.user);
+    console.log(game.getUser());
     if (req.user.id == game.getUser().id) {
       return next();
     } else {
@@ -24,8 +25,6 @@ var isOwner = function (req, res, next) {
     }
   });
 }
-
-
 
 /* GET game */
 router.get('/:id', function(req, res) {
@@ -36,6 +35,7 @@ router.get('/:id', function(req, res) {
 
 /* POST game */
 router.post('/', isAuthenticated, function(req, res) {
+  console.log(req.body);
   models.Game.create({
     name: req.body.name,
     shortDesc: req.body.shortDesc,
