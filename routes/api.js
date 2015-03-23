@@ -3,16 +3,6 @@ var router = express.Router();
 var models = require('../models');
 var bcrypt = require('bcrypt');
 
-var isAuthenticated = function (req, res, next) {
-  // if user is authenticated in the session, call the next() to call the next request handler
-  // Passport adds this method to request object. A middleware is allowed to add properties to
-  // request and response objects
-  if (req.isAuthenticated())
-    return next();
-  else
-    return res.sendStatus(401);
-}
-
 module.exports = function(passport) {
   router.post('/login', passport.authenticate('login'), function(req, res) {
     res.json({ success: true });
@@ -49,7 +39,7 @@ module.exports = function(passport) {
     });
   });
 
-  router.get('/self', isAuthenticated, function(req, res) {
+  router.get('/self', passport.isAuthenticated, function(req, res) {
     res.json({ user: req.user });
   });
 

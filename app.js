@@ -31,10 +31,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-var initPassport = require('./authentication/authentication');
+var initPassport = require('./lib/auth');
 initPassport(passport);
 
-var routes = require('./routes/index');
+var routes = require('./routes/index')(passport);
 var api = require('./routes/api')(passport);
 app.use('/', routes);
 app.use('/api', api);
