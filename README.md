@@ -11,8 +11,14 @@
 + Edit config/config.json to reflect your local database user/password
 + `./bin/www`
 + The app will be available at http://localhost:3000/
-+ You can login at http://localhost:3000/login.html
++ You can login at http://localhost:3000/login
 
 ## Testing
-+ sudo npm install -g mocha
-+ mocha
++ `sudo npm install -g mocha`
++ `mocha`
+
+## Creating fixtures
++ `mysqldump > fixtures/latest.dump`
+
+## Loading fixtures
++ `mysql < fixtures/latest.dump`

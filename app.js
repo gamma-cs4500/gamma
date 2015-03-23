@@ -16,7 +16,7 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -31,10 +31,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-var initPassport = require('./authentication/authentication');
+var initPassport = require('./lib/auth');
 initPassport(passport);
 
-var routes = require('./routes/index');
+var routes = require('./routes/index')(passport);
 var api = require('./routes/api')(passport);
 var game = require('./routes/game');
 app.use('/', routes);
@@ -54,6 +54,7 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
+        console.log(err.stack);
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
@@ -65,6 +66,7 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
+    console.log(err.stack);
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,

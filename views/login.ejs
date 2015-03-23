@@ -5,15 +5,15 @@
   <title>Login // Soft Admin</title>
 
   <!-- Default Styles (DO NOT TOUCH) -->
-  <link rel="stylesheet" href="stylesheets/font-awesome.min.css">
-  <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
-  <link rel="stylesheet" href="stylesheets/fonts.css">
-  <link type="text/css" rel="stylesheet" href="stylesheets/soft-admin.css"/>
+  <link rel="stylesheet" href="/stylesheets/font-awesome.min.css">
+  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+  <link rel="stylesheet" href="/stylesheets/fonts.css">
+  <link type="text/css" rel="stylesheet" href="/stylesheets/soft-admin.css"/>
 
   <!-- Adjustable Styles -->
-  <link type="text/css" rel="stylesheet" href="stylesheets/icheck.css?v=1.0.1">
+  <link type="text/css" rel="stylesheet" href="/stylesheets/icheck.css?v=1.0.1">
   <style>
-   body { background:url(img/bg.png);  }
+   body { background:url(/img/bg.png);  }
    #logo { background:#999; width:220px; margin:auto; position:relative; top:30px; }
    #log-tbl { width:100%; height:100%; display:table; clear:both; content:''; }
    #log-contain { width:100%; height:100%; text-align:center; display:table-cell; vertical-align:middle; padding-bottom:140px; }
@@ -40,8 +40,8 @@
 
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
-   <script src="lib/js/html5shiv.js"></script>
-   <script src="lib/js/respond.min.js"></script>
+   <script src="/lib/js/html5shiv.js"></script>
+   <script src="/lib/js/respond.min.js"></script>
   <![endif]-->
 
  </head>
@@ -63,14 +63,14 @@
        <label for="login-username">Username</label>
        <div class="input-icon">
         <i class="icon icon-user"></i>
-        <input id="user" class="form-control form-soft input-sm" type="text" style="margin-top:0px; margin-bottom:0px;">
+        <input id="user" class="form-control form-soft input-sm" type="text" style="margin-top:0px; margin-bottom:0px;" required>
        </div>
       </div>
       <div class="form-group">
        <label for="login-password">Password</label>
        <div class="input-icon">
         <i class="icon icon-lock"></i>
-        <input id="pass" class="form-control form-soft input-sm" type="password">
+        <input id="pass" class="form-control form-soft input-sm" type="password" required>
        </div>
       </div>
 
@@ -96,10 +96,10 @@
 
   <!-- Default JS (DO NOT TOUCH) -->
   <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
 
   <!-- Adjustable JS -->
-  <script src="js/icheck.js"></script>
+  <script src="/js/icheck.js"></script>
   <script>
       var BASE_SERVER_URL = "http://localhost:3000";
       function login(){
@@ -112,7 +112,7 @@
               url: BASE_SERVER_URL+"/api/login",
               data: {username:user, password:pass},
               success: function(){
-                  window.location.href=baseUrl + "index.html";
+                  window.location.href=baseUrl;
               },
               error: function(){
                   window.location.href = window.location.href + "?";
@@ -141,7 +141,7 @@
               data: {username:user, password:pass},
               success: function(res){
                   if (res.success == true) {
-                    window.location.href=baseUrl + "index.html";
+                    window.location.href=baseUrl;
                   } else {
                     window.location.href = window.location.href + "?";
                   }

@@ -43,12 +43,12 @@ module.exports = function(passport) {
               req.login(user, function (err) {
                 if (err) throw err;
                 res.json({ success: true });
-              });
+            });
           }
         });
       });
-      });
     });
+  });
 
   router.get('/self', isAuthenticated, function(req, res) {
       res.json({ user: req.user });

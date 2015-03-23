@@ -10,27 +10,34 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
-		<!--[if lte IE 8]><script src="../public/stylesheets/ie/html5shiv.js"></script><![endif]-->
-		<script src="../public/js/jquery.min.js"></script>
-		<script src="../public/js/jquery.dropotron.min.js"></script>
-		<script src="../public/js/skel.min.js"></script>
-		<script src="../public/js/skel-layers.min.js"></script>
-		<script src="../public/js/init.js"></script>
+		<!--[if lte IE 8]><script src="/stylesheets/ie/html5shiv.js"></script><![endif]-->
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/jquery.dropotron.min.js"></script>
+		<script src="/js/skel.min.js"></script>
+		<script src="/js/skel-layers.min.js"></script>
+		<script src="/js/init.js"></script>
+
+
 		<noscript>
-			<link rel="stylesheet" href="../public/stylesheets/skel.css" />
-			<link rel="stylesheet" href="../public/stylesheets/style.css" />
-			<link rel="stylesheet" href="../public/stylesheets/style-wide.css" />
+			<link rel="stylesheet" href="/stylesheets/skel.css" />
+			<link rel="stylesheet" href="/stylesheets/style.css" />
+			<link rel="stylesheet" href="/stylesheets/style-wide.css" />
 		</noscript>
-		<!--[if lte IE 8]><link rel="stylesheet" href="../public/stylesheets/css/ie/v8.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="/stylesheets/css/ie/v8.css" /><![endif]-->
 	</head>
 
     <style type="text/css">
+        #searchbar {
+            width: 750px;
+            display: inline;
+            margin: 15px;
+        }
         #tfheader{
             background-color:#c3dfef;
         }
         #tfnewsearch{
-            float:right;
             padding:20px;
+            width: 100%;
         }
         .tftextinput{
             margin: 0;
@@ -80,15 +87,16 @@
 				<!-- Header -->
 					<div id="header" class="skel-panels-fixed">
 						<div id="logo">
-							<h1><a href="index.html">Gamma</a></h1>
+							<h1><a href="/">Gamma</a></h1>
 							<span class="tag">by Brutally Average</span>
 						</div>
 						<nav id="nav">
 							<ul>
-								<li class="active"><a href="index.html">Home</a></li>
-								<li><a href="game-page.html">Game Page</a></li>
-								<li><a href="new-game.html">New Game</a></li>
-                                <li><button onclick="signout()">Signout</button></li>
+								<li class="active"><a href="/">Home</a></li>
+								<li><a href="/game">Game Page</a></li>
+								<li><a href="/game/new">New Game</a></li>
+                <!-- FIXME: Remove inline style -->
+                <li><a style="cursor:pointer" onclick="signout()">Signout</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -99,7 +107,7 @@
 							<p>This is <strong>Gamma</strong>, a game repository project for Software Development, Spring 2015. Search below!</p>
                             <div id="tfheader">
                                 <form id="tfnewsearch" method="get" action="http://www.google.com">
-                                    <input type="text" class="tftextinput" name="q" size="21" maxlength="120"><input type="submit" value="search" class="tfbutton">
+                                    <input type="text" id="searchbar" class="tftextinput" name="q" size="21" maxlength="120"><input type="submit" value="search" class="tfbutton">
                                 </form>
                                 <div class="tfclear"></div>
                             </div>
@@ -108,25 +116,27 @@
 
 				<!-- Extra -->
 					<div id="extra">
-						<div class="container">
+						<div class="container" id="gameContainer">
 							<div class="row no-collapse-1">
-								<section class="4u"> <a href="#" class="image featured"><img src="../public/assets/images/pic01.jpg" alt=""></a>
+                                <div id="testGameRender"></div>
+								<section class="4u"> <a href="#" class="image featured"><img src="assets/images/pic01.jpg" alt=""></a>
 									<div class="box">
                                         <h2>Game 1</h2>
 										<p>This is a sports game, about sports, for people who like sports</p>
-										<a href="game-page.html" class="button">More</a> </div>
+										<a href="/game" class="button">More</a>
+                                    </div>
 								</section>
-								<section class="4u"> <a href="#" class="image featured"><img src="../public/assets/images/pic02.jpg" alt=""></a>
+								<section class="4u"> <a href="#" class="image featured"><img src="assets/images/pic02.jpg" alt=""></a>
 									<div class="box">
                                         <h2>Game 2</h2>
 										<p>adventure game, for people who like adventures, or something like that</p>
-										<a href="game-page.html" class="button">More</a> </div>
+										<a href="/game" class="button">More</a> </div>
 								</section>
-								<section class="4u"> <a href="#" class="image featured"><img src="../public/assets/images/pic03.jpg" alt=""></a>
+								<section class="4u"> <a href="#" class="image featured"><img src="assets/images/pic03.jpg" alt=""></a>
 									<div class="box">
                                         <h2>Game 3</h2>
 										<p>This is a cool hip game that no one understands but wins a ton of awards</p>
-										<a href="game-page.html" class="button">More</a> </div>
+										<a href="/game" class="button">More</a> </div>
 								</section>
 							</div>
 						</div>
@@ -153,7 +163,8 @@
 				</div>
 			</div>
 		</div>
-
+        <script src="../public/js/react.js"></script>
+        <script src="../public/js/JSXTransformer.js"></script>
     <script>
         var BASE_SERVER_URL = "http://localhost:3000";
         function signout(){
@@ -166,11 +177,75 @@
                 url: BASE_SERVER_URL+"/api/logout",
                 data: {username:user, password:pass},
                 success: function(){
-                    window.location.href=baseUrl+"login.html";
+                    window.location.href=BASE_SERVER_URL;
                 },
                 error: function(){
                 }
             });
+        }
+    </script>
+
+    <script type="text/jsx">
+
+        var GameTile = React.createClass({
+            render: function() {
+                return (
+                        <section class="4u">
+                            <a href="#" class="image featured">
+                              <img src={this.props.imgSrc} alt=""></img>
+                            </a>
+                            <div class="box">
+                              <h2>{this.props.gameTitle}</h2>
+                              <p>{this.props.description}</p>
+                                <a href="/game" class="button">More</a>
+                            </div>
+                        </section>
+                );
+            }
+        });
+
+        var obj = {items:[
+            {"gameTitle":"Game 1", "description":"This is game 1", imgSrc:"/assets/images/pic01.jpg"},
+            {"gameTitle":"Game 2", "description":"This is game 2", imgSrc:"/assets/images/pic02.jpg"},
+            {"gameTitle":"Game 3", "description":"This is game 3", imgSrc:"/assets/images/pic03.jpg"}
+        ]};
+
+        var gamesInRow = 0;
+        var rows = 99;
+
+        var createRow = function(){
+            rows+=1;
+            var container = document.getElementById("gameContainer");
+            var ele = document.createElement("div");
+            ele.setAttribute("class", 'row no-collapse-1');
+
+            for(var j = 0; j < 3; j++){
+                var item = document.createElement("div");
+                item.setAttribute("id", ''+rows+'.'+(j+1));
+                ele.appendChild(item);
+            }
+
+            container.appendChild(ele);
+        }
+
+        createRow();
+
+        for(var i = 0; i < obj.items.length; i++){
+            var temp = obj.items[i];
+            if(gamesInRow==3){
+                createRow();
+                gamesInRow = 0;
+            }
+            console.log(document.getElementById(''+rows));
+
+            React.render(
+                <GameTile 
+                  gameTitle={temp.gameTitle} 
+                  description={temp.description} 
+                  imgSrc={temp.imgSrc}/>,
+              document.getElementById(''+rows+(i+1))
+            );
+            gamesInRow += 1;
         }
     </script>
 

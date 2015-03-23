@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<!--
+	Phase Shift by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Gamma - New Game</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/jquery.dropotron.min.js"></script>
+		<script src="/js/skel.min.js"></script>
+		<script src="/js/skel-layers.min.js"></script>
+		<script src="/js/init.js"></script>
+		<noscript>
+            <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+		</noscript>
+		<!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
+	</head>
+	<body>
+    <!-- Wrapper -->
+			<div class="wrapper style1">
+				<!-- Header -->
+					<div id="header" class="skel-panels-fixed">
+						<div id="logo">
+							<h1><a href="/">Gamma</a></h1>
+							<span class="tag">by Brutally Average</span>
+						</div>
+						<nav id="nav">
+							<ul>
+								<li class="active"><a href="/">Home</a></li>
+								<li><a href="/game">Game Page</a></li>
+								<li><a href="/game/new">New Game</a></li>
+							</ul>
+						</nav>
+					</div>
+				<!-- Header -->
+				<!-- Page -->
+					<div id="page" class="container">
+						<section>
+							<header class="major">
+								<h2>New Game</h2>
+								<span class="byline">Share yr game</span>
+							</header>
+              <form class="pure-form pure-form-stacked">
+                  <fieldset>
+                      <legend>Game Info</legend>
+                      <input name="name" type="text" placeholder="Name">
+                      <input name="shortdesc" type="text" placeholder="Short description">
+                      <textarea name="longdesc" placeholder="Long description"></textarea>
+                      <label for="game-visibility">Visibility</label>
+                      <select id="game-visibility" name="visibility">
+                          <option value="private">Private</option>
+                          <option value="public">Public</option>
+                          <option value="neu">NEU Only</option>
+                      </select>
+                      <label for="game-genre">Genre</label>
+                      <select id="game-genre" name="genre">
+                        <% genres.forEach(function(genre) { %>
+                        <option value="<%= genre.name %>"><%= genre.name %></option>
+                        <% }); %>
+                      </select>
+                      <label for="game-platform">Platform</label>
+                      <select id="game-platform" name="platform">
+                        <% platforms.forEach(function(platform) { %>
+                        <option value="<%= platform.name %>"><%= platform.name %></option>
+                        <% }); %>
+                      </select>
+                      <label for="game-license">License</label>
+                      <select id="game-license" name="license">
+                        <% licenses.forEach(function(license) { %>
+                        <option value="<%= license.type %>"><%= license.type %></option>
+                        <% }); %>
+                      </select>
+                      <input name="tags" type="text" placeholder="Tags">
+                      <input name="users" type="text" placeholder="Collaborators">
+                      <label for="game-files">Game .zip</label>
+                      <input id="game-files" type="file">
+                      <button type="submit" class="pure-button pure-button-primary">Submit</button>
+                  </fieldset>
+              </form>
+            </section>
+					</div>
+				<!-- /Page -->
+	<!-- Copyright -->
+		<div id="copyright">
+				<ul class="icons">
+					<li><a href="#" class="fa fa-facebook"><span>Facebook</span></a></li>
+					<li><a href="#" class="fa fa-twitter"><span>Twitter</span></a></li>
+					<li><a href="#" class="fa fa-google-plus"><span>Google+</span></a></li>
+				</ul>
+		</div>
+	</body>
+</html>

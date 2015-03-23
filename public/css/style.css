@@ -139,7 +139,7 @@
 		appearance: none;
 		background: white;
 		color: #555555;
-		border: none;
+		border: 1px solid #dddddd;
 		display: block;
 		outline: 0;
 		padding: 1em 1em;
