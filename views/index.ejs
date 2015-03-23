@@ -95,8 +95,11 @@
 								<li class="active"><a href="/">Home</a></li>
 								<li><a href="/game">Game Page</a></li>
 								<li><a href="/game/new">New Game</a></li>
-                <!-- FIXME: Remove inline style -->
-                <li><a style="cursor:pointer" onclick="signout()">Signout</a></li>
+                <% if (user !== undefined) { %>
+                <li><a href="/login" onclick="signout()">Signout</a></li>
+                <% } else { %>
+                <li><a href="/login">Login</a></li>
+                <% } %>
 							</ul>
 						</nav>
 					</div>
@@ -105,12 +108,12 @@
 					<div id="banner" class="container">
 						<section>
 							<p>This is <strong>Gamma</strong>, a game repository project for Software Development, Spring 2015. Search below!</p>
-                            <div id="tfheader">
-                                <form id="tfnewsearch" method="get" action="http://www.google.com">
-                                    <input type="text" id="searchbar" class="tftextinput" name="q" size="21" maxlength="120"><input type="submit" value="search" class="tfbutton">
-                                </form>
-                                <div class="tfclear"></div>
-                            </div>
+              <div id="tfheader">
+                  <form id="tfnewsearch" method="get" action="http://www.google.com">
+                      <input type="text" id="searchbar" class="tftextinput" name="q" size="21" maxlength="120"><input type="submit" value="search" class="tfbutton">
+                  </form>
+                  <div class="tfclear"></div>
+              </div>
 						</section>
 					</div>
 
@@ -118,23 +121,23 @@
 					<div id="extra">
 						<div class="container" id="gameContainer">
 							<div class="row no-collapse-1">
-                                <div id="testGameRender"></div>
+                <div id="testGameRender"></div>
 								<section class="4u"> <a href="#" class="image featured"><img src="assets/images/pic01.jpg" alt=""></a>
 									<div class="box">
-                                        <h2>Game 1</h2>
+                    <h2>Game 1</h2>
 										<p>This is a sports game, about sports, for people who like sports</p>
 										<a href="/game" class="button">More</a>
-                                    </div>
+                  </div>
 								</section>
 								<section class="4u"> <a href="#" class="image featured"><img src="assets/images/pic02.jpg" alt=""></a>
 									<div class="box">
-                                        <h2>Game 2</h2>
+                    <h2>Game 2</h2>
 										<p>adventure game, for people who like adventures, or something like that</p>
 										<a href="/game" class="button">More</a> </div>
 								</section>
 								<section class="4u"> <a href="#" class="image featured"><img src="assets/images/pic03.jpg" alt=""></a>
 									<div class="box">
-                                        <h2>Game 3</h2>
+                    <h2>Game 3</h2>
 										<p>This is a cool hip game that no one understands but wins a ton of awards</p>
 										<a href="/game" class="button">More</a> </div>
 								</section>

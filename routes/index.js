@@ -5,8 +5,10 @@ var models = require("../models");
 module.exports = function(passport) {
   /* GET home page. */
   router.get('/', function(req, res, next) {
-    // Get a list of games to render
-    res.render('index');
+    var params = {
+      'user': req.user
+    };
+    res.render('index', params);
   });
 
   router.get('/game/new', passport.loginRequired, function(req, res, next) {
@@ -16,7 +18,8 @@ module.exports = function(passport) {
           var params = {
             'licenses': licenses,
             'genres': genres,
-            'platforms': platforms
+            'platforms': platforms,
+            'user': req.user
           };
           res.render('new-game', params);
         });
@@ -67,7 +70,10 @@ module.exports = function(passport) {
   });
 
   router.get('/login', function(req, res, next) {
-    res.render('login');
+    var params = {
+      'user': req.user
+    };
+    res.render('login', params);
   });
 
   return router;
