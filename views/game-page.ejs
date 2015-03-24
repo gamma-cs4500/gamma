@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Game - Game Name</title>
+    <title><%= game.name %></title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
@@ -55,21 +55,28 @@
 										<h2>Rate this game!</h2>
 									</header>
 								</section>
+                <!--
 								<section>
 									<header class="major">
 										<h2>Screenshots</h2>
 									</header>
 								</section>
+                -->
 								<section>
 									<header class="major">
-										<h2>Creator Info</h2>
+										<h2>Game Info</h2>
 									</header>
 									<ul class="default">
-										<li>Name: <a href="#">Some Dude</a></li>
-										<li>Upload Date: 2/17/2015</li>
-										<li>Genre: Things</li>
-										<li>Rating: No one should play this.</li>
-										<li>Contact: stuff@example.com</li>
+                    <li>Collaborators: 
+                      <% game.getUsers().then(function(users) { %>
+                      <%   users.forEach(function(user) { %>
+                      <a href="#"><%= user.username %></a>
+                      <%   }); %>
+                      <% }); %>
+                    </li>
+                    <li>Upload Date: <%= game.uploadDate %></li>
+                    <li>Genre: <%= game.genre %></li>
+                    <li>Platform: <%= game.platform %></li>
 									</ul>
 								</section>
                 <section>

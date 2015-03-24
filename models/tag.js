@@ -5,7 +5,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        Tag.hasMany(models.Game);
+        Tag.belongsToMany(models.Game);
       }
     }
   });

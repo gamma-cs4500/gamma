@@ -14,6 +14,8 @@ module.exports = function(sequelize, DataTypes) {
           Game.hasMany(models.File);
           Game.hasMany(models.Rating);
           Game.hasMany(models.Comment);
+          Game.hasOne(models.Genre);
+          Game.hasOne(models.Platform);
       }
     },
     instanceMethods: {
@@ -22,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
         if (ratings.count == 0)
           return 0;
         var sum = ratings.reduce(function (prev, cur, _, __) {
-          return prev + cur.rating;
+          return prev + Number.parseInt(cur.rating);
         }, 0);
         return sum / ratings.length;
       }
