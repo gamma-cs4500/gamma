@@ -9,13 +9,11 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-          Game.hasMany(models.User);
-          Game.hasMany(models.Tag);
-          Game.hasMany(models.File);
-          Game.hasMany(models.Rating);
-          Game.hasMany(models.Comment);
-          Game.hasOne(models.Genre);
-          Game.hasOne(models.Platform);
+        Game.belongsToMany(models.User);
+        Game.belongsToMany(models.Tag);
+        Game.belongsTo(models.Genre);
+        Game.belongsTo(models.Platform);
+        Game.belongsTo(models.License);
       }
     },
     instanceMethods: {
