@@ -3,6 +3,7 @@ var router = express.Router();
 var models = require('../models');
 var bcrypt = require('bcrypt');
 
+<<<<<<< HEAD
 
 var isAuthenticated = function (req, res, next) {
   // if user is authenticated in the session, call the next() to call the next request handler
@@ -14,6 +15,8 @@ var isAuthenticated = function (req, res, next) {
     return res.sendStatus(401);
 }
 
+=======
+>>>>>>> master
 module.exports = function(passport) {
   router.post('/login', passport.authenticate('login'), function(req, res) {
     res.json({ success: true });
@@ -40,8 +43,8 @@ module.exports = function(passport) {
                 message: 'User exists'
             });
           } else {
-              req.login(user, function (err) {
-                if (err) throw err;
+            req.login(user, function (err) {
+              if (err) throw err;
                 res.json({ success: true });
             });
           }
@@ -50,8 +53,13 @@ module.exports = function(passport) {
     });
   });
 
+<<<<<<< HEAD
   router.get('/self', isAuthenticated, function(req, res) {
       res.json({ user: req.user });
+=======
+  router.get('/self', passport.isAuthenticated, function(req, res) {
+    res.json({ user: req.user });
+>>>>>>> master
   });
 
   return router;
