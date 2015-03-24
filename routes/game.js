@@ -48,6 +48,8 @@ module.exports = function(passport) {
       date: Date.now().toString(),
       gameId: req.params.game.id,
       userId: req.params.user.id
+    }).then(function() {
+      res.json({success: true});
     });
   });
 
@@ -56,6 +58,15 @@ module.exports = function(passport) {
     models.Rating.create({
       rating: req.params.rating,
       date: Date.now().toString()
+    }).then(function() {
+      res.json({success: true});
+    });
+  });
+
+  /* POST user to game */
+  router.post('/:id/collaborators', passport.isOwner, function (req, res) {
+    req.game.addUser(req.user).then(function() {
+      res.json({success: true}); 
     });
   });
 
