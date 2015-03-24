@@ -41,5 +41,23 @@ module.exports = function(passport) {
     });
   });
 
+  /* POST comment to game */
+  router.post('/:id/comment', passport.isOwner, function (req, res) {
+    models.Comment.create({
+      comment: req.params.comment,
+      date: Date.now().toString(),
+      gameId: req.params.game.id,
+      userId: req.params.user.id
+    });
+  });
+
+  /* POST rating to game */
+  router.post('/:id/rating', passport.isOwner, function (req, res) {
+    models.Rating.create({
+      rating: req.params.rating,
+      date: Date.now().toString()
+    });
+  });
+
   return router;
 }
