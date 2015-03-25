@@ -11,20 +11,23 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         Game.belongsToMany(models.User);
         Game.belongsToMany(models.Tag);
+        Game.hasMany(models.Comment);
+        Game.hasMany(models.Rating);
         Game.belongsTo(models.Genre);
         Game.belongsTo(models.Platform);
         Game.belongsTo(models.License);
       }
     },
     instanceMethods: {
-      averageRating: function() {
+      averageRating: function(cb) {
        this.getRatings().then(function(ratings) {
-          if (ratings.count == 0)
-            return 0;
+        console.log(ratings);
+          if (ratings.length == 0)
+            return cb(0);
           var sum = ratings.reduce(function (prev, cur, _, __) {
             return prev + Number.parseInt(cur.rating);
           }, 0);
-          return sum / ratings.length;
+          return cb(sum / ratings.length);
         });
       }
     }

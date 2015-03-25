@@ -55,6 +55,7 @@
 				<section>
 					<header class="major">
 						<h2>Rate this game!</h2>
+						<h4>Rating: <%= game._averageRating %> / 5 </h4>
 					</header>
 				   	<form id="rating-form" class="form">
 					 	<fieldset>
@@ -79,14 +80,14 @@
 					</header>
 					<ul class="default">
 	                    <li>Collaborators:
-	                    	<% game.users.forEach(function(user) { %>
+	                    	<% game.Users.forEach(function(user) { %>
 	                    		<a href="#"><%= user.username %></a>
 	                    	<% }); %>
 	                    </li>
 	                    <li>Upload Date: <%= game.uploadDate %></li>
-	                    <li>Genre: <%= game.genre %></li>
-	                    <li>Platform: <%= game.platform %></li>
-	                    <li>License: <%= game.license %></li>
+	                    <li>Genre: <%= game.Genre.name %></li>
+	                    <li>Platform: <%= game.Platform.name %></li>
+	                    <li>License: <%= game.License.type %></li>
 					</ul>
 					</section>
 	                <section>
@@ -109,8 +110,8 @@
 					</section>
 					<section>
    						 <h3>Comments</h3>
-   						 <% game.comments.forEach(function(comment) { %>
-   						 <div><%= comment.comment %></div>
+   						 <% game.Comments.forEach(function(comment) { %>
+   						 <div><%= comment.User.username %>: <%= comment.comment %></div>
    						 <%	}) %>
    						 <form id="comment-form" class="form">
    						 	<fieldset>

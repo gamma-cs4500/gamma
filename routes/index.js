@@ -28,40 +28,34 @@ module.exports = function(passport) {
   });
 
   router.get('/game/:id', function(req, res, next) {
-    models.Game.find(req.params.id).then(function(game) {
-      var user = req.user;
-      var params = {
-        'game': game,
-        'user': user
-      };
+    var query = {
+      'where': {'id': req.params.id},
+      'include': [
+        {'model': models.User},
+        {'model': models.Comment, 'include': [models.User]},
+        {'model': models.Rating},
+        {'model': models.Genre},
+        {'model': models.Platform},
+        {'model': models.License}
+      ]
+    };
+    models.Game.find(query).then(function(game) {
+      game.averageRating(function(averageRating) {
+        game._averageRating = averageRating.toFixed(2);
+        // No such game
+        if (game == null)
+          res.redirect(301, '/');
 
-      // No such game
-      if (game == null)
-        res.redirect(301, '/');
+        var params = {
+          'game': game,
+          'user': req.user
+        };
 
-      // Hack to get around associations being TOTALLY BROKEN
-      // Yes, this is ugly
-      models.Genre.find(game.GenreId).then(function(genre) {
-        game.genre = genre.name;
-        models.Platform.find(game.PlatformId).then(function(platform) {
-          game.platform = platform.name;
-          models.License.find(game.LicenseId).then(function(license) {
-            game.license = license.type;
-            game.getUsers().then(function(users) {
-              game.users = users;
-              models.Comment.findAll({'where': {'GameId': game.id}}).then(function(comments) {
-                game.comments = comments;
-                models.Rating.findAll({'where': {'GameId': game.id}}).then(function(ratings) {
-                  game.ratings = ratings;
-                  handleGameRequest(params, res);
-                });
-              });
-            });
-          });
-        });
+        handleGameRequest(params, res);
       });
     });
   });
+
 
   router.get('/login', function(req, res, next) {
     var params = {
