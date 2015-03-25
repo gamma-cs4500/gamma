@@ -36,7 +36,8 @@ module.exports = function(passport) {
         {'model': models.Rating},
         {'model': models.Genre},
         {'model': models.Platform},
-        {'model': models.License}
+        {'model': models.License},
+        {'model': models.Tag}
       ]
     };
     models.Game.find(query).then(function(game) {

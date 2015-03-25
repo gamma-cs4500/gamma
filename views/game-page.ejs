@@ -96,6 +96,11 @@
 	                    		<a href="#"><%= user.username %></a>
 	                    	<% }); %>
 	                    </li>
+	                    <li>Tags:
+	                    	<% game.Tags.forEach(function(tag) { %>
+	                    		<a href="#"><%= tag.tag %></a>
+	                    	<% }); %>
+	                    </li>
 	                    <li>Upload Date: <%= game.uploadDate %></li>
 	                    <li>Genre: <%= game.Genre.name %></li>
 	                    <li>Platform: <%= game.Platform.name %></li>
