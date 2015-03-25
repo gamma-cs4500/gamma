@@ -53,9 +53,9 @@
               <form class="pure-form pure-form-stacked">
                   <fieldset>
                       <legend>Game Info</legend>
-                      <input name="name" type="text" placeholder="Name">
-                      <input name="shortdesc" type="text" placeholder="Short description">
-                      <textarea name="longdesc" placeholder="Long description"></textarea>
+                      <input id="name" name="name" type="text" placeholder="Name">
+                      <input id="shortdesc" name="shortdesc" type="text" placeholder="Short description">
+                      <textarea id ="longdesc" name="longdesc" placeholder="Long description"></textarea>
                       <label for="game-visibility">Visibility</label>
                       <select id="game-visibility" name="visibility">
                           <option value="private">Private</option>
@@ -65,26 +65,26 @@
                       <label for="game-genre">Genre</label>
                       <select id="game-genre" name="genre">
                         <% genres.forEach(function(genre) { %>
-                        <option value="<%= genre.name %>"><%= genre.name %></option>
+                        <option value="<%= genre.id %>"><%= genre.name %></option>
                         <% }); %>
                       </select>
                       <label for="game-platform">Platform</label>
                       <select id="game-platform" name="platform">
                         <% platforms.forEach(function(platform) { %>
-                        <option value="<%= platform.name %>"><%= platform.name %></option>
+                        <option value="<%= platform.id %>"><%= platform.name %></option>
                         <% }); %>
                       </select>
                       <label for="game-license">License</label>
                       <select id="game-license" name="license">
                         <% licenses.forEach(function(license) { %>
-                        <option value="<%= license.type %>"><%= license.type %></option>
+                        <option value="<%= license.id %>"><%= license.type %></option>
                         <% }); %>
                       </select>
-                      <input name="tags" type="text" placeholder="Tags">
-                      <input name="users" type="text" placeholder="Collaborators">
+                      <input id="tags" name="tags" type="text" placeholder="Tags">
+                      <input id="users" name="users" type="text" placeholder="Collaborators">
                       <label for="game-files">Game .zip</label>
                       <input id="game-files" type="file">
-                      <button type="submit" method="post" class="pure-button pure-button-primary">Submit</button>
+                      <button type="submit" id="new-game-btn" class="pure-button pure-button-primary">Submit</button>
                   </fieldset>
               </form>
             </section>
@@ -98,5 +98,41 @@
 					<li><a href="#" class="fa fa-google-plus"><span>Google+</span></a></li>
 				</ul>
 		</div>
+    <script>
+      function createGame(){
+          var base = (window.location.href).split("game");
+          var baseUrl = base[0];
+          var title = $('#name').val();
+          var shortDesc = $('#shortdesc').val();
+          var longDesc = $('#longdesc').val();
+          var gameVisibility = $('#game-visibility').val();
+          var gameGenre = $('#game-genre').val();
+          var gamePlatform = $('#game-platform').val();
+          var gameLicense = $('#game-license').val();
+          var tags = $('#tags').val();
+          var users = $('#users').val();
+
+          var data = {name: title, shortDesc: shortDesc, longDesc: longDesc,
+           gameVisibility: gameVisibility, gameGenre: gameGenre,
+           gamePlatform: gamePlatform, gameLicense: gameLicense,
+           tags: tags, users: users}
+          $.ajax({
+              type: "POST",
+              url: baseUrl+"api/game",
+              data: data,
+              success: function(res){
+                  window.location.href = baseUrl + "game/" + res.gameId;
+              },
+              error: function(){
+                  window.location.href = window.location.href + "?";
+              }
+          });
+      }
+
+      $("#new-game-btn").on('click', function (evt) {
+        evt.preventDefault();
+        createGame();
+      })
+      </script>
 	</body>
 </html>

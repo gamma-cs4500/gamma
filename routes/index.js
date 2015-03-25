@@ -31,7 +31,7 @@ module.exports = function(passport) {
     models.Game.find(req.params.id).then(function(game) {
       var user = req.user;
       var params = {
-        'game': game, 
+        'game': game,
         'user': user
       };
 
