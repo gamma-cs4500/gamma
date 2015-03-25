@@ -18,7 +18,7 @@
 --
 -- Table structure for table `Comments`
 --
-
+use test;
 DROP TABLE IF EXISTS `Comments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -130,6 +130,16 @@ CREATE TABLE `Genres` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `Genres`
+--
+
+LOCK TABLES `Genres` WRITE;
+/*!40000 ALTER TABLE `Genres` DISABLE KEYS */;
+INSERT INTO `Genres` VALUES (1,'Adventure'),(2,'First-Person Shooter'),(3,'Puzzle'),(4,'Mystery'),(5,'Horror');
+/*!40000 ALTER TABLE `Genres` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Licenses`
 --
 
@@ -142,6 +152,13 @@ CREATE TABLE `Licenses` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `Licenses` WRITE;
+/*!40000 ALTER TABLE `Licenses` DISABLE KEYS */;
+INSERT INTO `Licenses` VALUES (1,'BSD'),(2,'GPL'),(3,'LGPL'),(4,'MIT'),(5,'Public Domain');
+/*!40000 ALTER TABLE `Licenses` ENABLE KEYS */;
+UNLOCK TABLES;
+
 
 --
 -- Table structure for table `Platforms`
@@ -157,6 +174,17 @@ CREATE TABLE `Platforms` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Platforms`
+--
+
+LOCK TABLES `Platforms` WRITE;
+/*!40000 ALTER TABLE `Platforms` DISABLE KEYS */;
+INSERT INTO `Platforms` VALUES (1,'desktop','PC'),(2,'desktop','Mac'),(3,'desktop','Linux'),(4,'mobile','iOS'),(5,'mobile','Android'),(6,'mobile','WP'),(7,'console','Xbox'),(8,'console','Playstation'),(9,'console','Wii');
+/*!40000 ALTER TABLE `Platforms` ENABLE KEYS */;
+UNLOCK TABLES;
+
 
 --
 -- Table structure for table `Ratings`

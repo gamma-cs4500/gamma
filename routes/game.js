@@ -12,11 +12,18 @@ module.exports = function(passport) {
 
   /* POST game */
   router.post('/', passport.isAuthenticated, function(req, res) {
+    var genre, platform, license, tags, users;
+
     models.Game.create({
       name: req.body.name,
       shortDesc: req.body.shortDesc,
       longDesc: req.body.longDesc,
-      visibility: req.body.visibility
+      visibility: req.body.gameVisibility,
+      GenreId: req.body.gameGenre,
+      PlatformId: req.body.gamePlatform,
+      LicenseId: req.body.gameLicense,
+      //tags: req.body.tags,
+      //users: req.body.users
     }).then(function(game) {
       res.json({success: true, gameId: game.get('id')});
     });
@@ -66,7 +73,7 @@ module.exports = function(passport) {
   /* POST user to game */
   router.post('/:id/collaborators', passport.isOwner, function (req, res) {
     req.game.addUser(req.user).then(function() {
-      res.json({success: true}); 
+      res.json({success: true});
     });
   });
 

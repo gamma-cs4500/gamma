@@ -31,14 +31,13 @@ module.exports = function(passport) {
     models.Game.find(req.params.id).then(function(game) {
       var user = req.user;
       var params = {
-        'game': game, 
+        'game': game,
         'user': user
       };
 
       // No such game
       if (game == null)
         res.redirect(301, '/');
-
       // Private game
       if (game.visibility === 'private') {
         // Not logged in
