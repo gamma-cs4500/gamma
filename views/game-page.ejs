@@ -31,7 +31,7 @@
 				margin-bottom: 10px;
 			}
 			#content section {
-				margin-bottom: 20px;
+				margin-bottom: 40px;
 			}
 		</style>
 	</head>
@@ -101,7 +101,7 @@
 	                    <li>Platform: <%= game.Platform.name %></li>
 	                    <li>License: <%= game.License.type %></li>
 					</ul>
-					</section>
+				</section>
 	                <section>
 	                    <header class="major">
 	                        <h2>Download!</h2>
@@ -110,7 +110,7 @@
 	                        <img href="#" src="/assets/images/download.png" height="150px" width="150px"/>
 	                    </ul>
 	                </section>
-				</div>
+			</div>
 				
 				<!-- Content -->
 				<div id="content" class="8u skel-cell-important">
@@ -125,7 +125,7 @@
    						 <% game.Comments.forEach(function(comment) { %>
    						 <div><b><%= comment.User.username %></b>: <%= comment.comment %></div>
    						 <%	}) %>
-   					</scetion>
+   					</section>
    					<section>
    						 <h3>Add Comment</h3>
    						 <form id="comment-form" class="form">
