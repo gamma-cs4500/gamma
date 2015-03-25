@@ -22,6 +22,18 @@
 			<link rel="stylesheet" href="/css/style-wide.css" />
 		</noscript>
 		<!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
+		<style type="text/css">
+			input, fieldset {
+				font-size: 12px;
+			}
+			form {
+				margin-top: 10px;
+				margin-bottom: 10px;
+			}
+			#content section {
+				margin-bottom: 20px;
+			}
+		</style>
 	</head>
 	<body>
 	<!-- Wrapper -->
@@ -53,7 +65,7 @@
 			<!-- Sidebar -->
 			<div id="sidebar" class="4u">
 				<section>
-					<header class="major">
+					<header>
 						<h2>Rate this game!</h2>
 						<h4>Rating: <%= game._averageRating %> / 5 </h4>
 					</header>
@@ -75,7 +87,7 @@
 			</section>
 -->
 				<section>
-					<header class="major">
+					<header>
 						<h2>Game Info</h2>
 					</header>
 					<ul class="default">
@@ -103,7 +115,7 @@
 				<!-- Content -->
 				<div id="content" class="8u skel-cell-important">
 					<section>
-						<header class="major">
+						<header>
        						 <h2><%= game.name %></h2>
         					 <span class="byline"><%= game.shortDesc %></span>
 						</header>
@@ -111,11 +123,12 @@
 					<section>
    						 <h3>Comments</h3>
    						 <% game.Comments.forEach(function(comment) { %>
-   						 <div><%= comment.User.username %>: <%= comment.comment %></div>
+   						 <div><b><%= comment.User.username %></b>: <%= comment.comment %></div>
    						 <%	}) %>
+   					</scetion>
+   					<section>
+   						 <h3>Add Comment</h3>
    						 <form id="comment-form" class="form">
-   						 	<fieldset>
-   						 		<legend>Add comment</legend>
    						 		<textarea id="comment-field" name="comment" placeholder="Nice game!"></textarea>
    						 		<button id="comment-button" type="submit" method="post" class="pure-button pure-button-primary">Submit</button>
    						 </form>
