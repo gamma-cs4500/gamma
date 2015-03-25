@@ -49,11 +49,11 @@ module.exports = function(passport) {
   });
 
   /* POST comment to game */
-  router.post('/:id/comment', passport.isOwner, function (req, res) {
+  router.post('/:id/comment', passport.isAuthenticated, function (req, res) {
     models.Comment.create({
       comment: req.body.comment,
       date: Date.now(),
-      GameId: req.game.id,
+      GameId: req.body.gameId,
       UserId: req.user.id
     }).then(function() {
       res.json({success: true});
@@ -61,10 +61,12 @@ module.exports = function(passport) {
   });
 
   /* POST rating to game */
-  router.post('/:id/rating', passport.isOwner, function (req, res) {
+  router.post('/:id/rating', passport.isAuthenticated, function (req, res) {
     models.Rating.create({
       rating: req.body.rating,
-      date: Date.now().toString()
+      date: Date.now(),
+      GameId: req.body.gameId,
+      UserId: req.user.id
     }).then(function() {
       res.json({success: true});
     });

@@ -56,6 +56,15 @@
 					<header class="major">
 						<h2>Rate this game!</h2>
 					</header>
+				   	<form id="rating-form" class="form">
+					 	<fieldset>
+					 		<input type="radio" name="rating" value="1"> 1
+					 		<input type="radio" name="rating" value="2"> 2
+					 		<input type="radio" name="rating" value="3"> 3
+					 		<input type="radio" name="rating" value="4"> 4
+					 		<input type="radio" name="rating" value="5" checked> 5
+					 		<button id="rating-button" type="submit" method="post" class="pure-button pure-button-primary">Submit</button>
+					 </form>
 				</section>
 <!--
 			<section>
@@ -130,8 +139,25 @@
                 url: "http://localhost:3000/api/game/<%= game.id %>/comment",
                 data: {
                 	comment: comment,
-                	gameId: <%= game.id %>,
-                	userId: <%= user.id %>
+                	gameId: <%= game.id %>
+                },
+                success: function(res){
+                    window.location.reload();
+                },
+                error: function(){
+                	console.log('error');
+                }
+            });
+      	});
+
+      	$("#rating-button").on('click', function (evt) {
+			var rating = $('input[name=rating]:checked', '#rating-form').val();
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:3000/api/game/<%= game.id %>/rating",
+                data: {
+                	rating: rating,
+                	gameId: <%= game.id %>
                 },
                 success: function(res){
                     window.location.reload();

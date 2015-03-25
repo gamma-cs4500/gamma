@@ -49,9 +49,9 @@ module.exports = function(passport) {
             game.license = license.type;
             game.getUsers().then(function(users) {
               game.users = users;
-              models.Comment.findAll({'game_id': game.id}).then(function(comments) {
+              models.Comment.findAll({'where': {'GameId': game.id}}).then(function(comments) {
                 game.comments = comments;
-                models.Rating.findAll({'game_id': game.id}).then(function(ratings) {
+                models.Rating.findAll({'where': {'GameId': game.id}}).then(function(ratings) {
                   game.ratings = ratings;
                   handleGameRequest(params, res);
                 });
