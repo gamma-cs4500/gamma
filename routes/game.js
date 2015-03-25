@@ -44,10 +44,10 @@ module.exports = function(passport) {
   /* POST comment to game */
   router.post('/:id/comment', passport.isOwner, function (req, res) {
     models.Comment.create({
-      comment: req.params.comment,
-      date: Date.now().toString(),
-      gameId: req.params.game.id,
-      userId: req.params.user.id
+      comment: req.body.comment,
+      date: Date.now(),
+      GameId: req.game.id,
+      UserId: req.user.id
     }).then(function() {
       res.json({success: true});
     });
@@ -56,7 +56,7 @@ module.exports = function(passport) {
   /* POST rating to game */
   router.post('/:id/rating', passport.isOwner, function (req, res) {
     models.Rating.create({
-      rating: req.params.rating,
+      rating: req.body.rating,
       date: Date.now().toString()
     }).then(function() {
       res.json({success: true});

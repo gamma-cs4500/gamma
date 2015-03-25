@@ -18,13 +18,14 @@ module.exports = function(sequelize, DataTypes) {
     },
     instanceMethods: {
       averageRating: function() {
-        var ratings = this.getRatings();
-        if (ratings.count == 0)
-          return 0;
-        var sum = ratings.reduce(function (prev, cur, _, __) {
-          return prev + Number.parseInt(cur.rating);
-        }, 0);
-        return sum / ratings.length;
+       this.getRatings().then(function(ratings) {
+          if (ratings.count == 0)
+            return 0;
+          var sum = ratings.reduce(function (prev, cur, _, __) {
+            return prev + Number.parseInt(cur.rating);
+          }, 0);
+          return sum / ratings.length;
+        });
       }
     }
   });

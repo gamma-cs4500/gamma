@@ -39,33 +39,27 @@ module.exports = function(passport) {
       if (game == null)
         res.redirect(301, '/');
 
-      // Private game
-      if (game.visibility === 'private') {
-        // Not logged in
-        if (user === undefined)
-          res.redirect(301, '/');
-        // Not associated with game
-        game.hasUser(user).then(function(hasUser) {
-          if(!hasUser)
-            res.redirect(301, '/');
-          else
-            res.render('game-page', params);
+      // Hack to get around associations being TOTALLY BROKEN
+      // Yes, this is ugly
+      models.Genre.find(game.GenreId).then(function(genre) {
+        game.genre = genre.name;
+        models.Platform.find(game.PlatformId).then(function(platform) {
+          game.platform = platform.name;
+          models.License.find(game.LicenseId).then(function(license) {
+            game.license = license.type;
+            game.getUsers().then(function(users) {
+              game.users = users;
+              models.Comment.findAll({'game_id': game.id}).then(function(comments) {
+                game.comments = comments;
+                models.Rating.findAll({'game_id': game.id}).then(function(ratings) {
+                  game.ratings = ratings;
+                  handleGameRequest(params, res);
+                });
+              });
+            });
+          });
         });
-      }
-
-      // NEU-Only game
-      else if (game.visibility === 'neu') {
-        // Not logged in or not NEU student
-        if (user === undefined || !user.hasNEUEmail())
-          res.redirect(301, '/');
-        else
-          res.render('game-page', params);
-      }
-
-      // Public game
-      else {
-        res.render('game-page', params);
-      }
+      });
     });
   });
 
@@ -77,4 +71,34 @@ module.exports = function(passport) {
   });
 
   return router;
+}
+
+function handleGameRequest(params, res) {
+    // Private game
+  if (params.game.visibility === 'private') {
+    // Not logged in
+    if (params.user === undefined)
+      res.redirect(301, '/');
+    // Not associated with game
+    params.game.hasUser(user).then(function(hasUser) {
+      if(!hasUser)
+        res.redirect(301, '/');
+      else
+        res.render('game-page', params);
+    });
+  }
+
+  // NEU-Only game
+  else if (params.game.visibility === 'neu') {
+    // Not logged in or not NEU student
+    if (params.user === undefined || !params.user.hasNEUEmail())
+      res.redirect(301, '/');
+    else
+      res.render('game-page', params);
+  }
+
+  // Public game
+  else {
+    res.render('game-page', params);
+  }
 }

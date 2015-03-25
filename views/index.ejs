@@ -93,13 +93,12 @@
 						<nav id="nav">
 							<ul>
 								<li class="active"><a href="/">Home</a></li>
-								<li><a href="/game">Game Page</a></li>
 								<li><a href="/game/new">New Game</a></li>
-                <% if (user !== undefined) { %>
-                <li><a href="/login" onclick="signout()">Signout</a></li>
-                <% } else { %>
-                <li><a href="/login">Login</a></li>
-                <% } %>
+                                <% if (user !== undefined) { %>
+                                <li><a href="/login" onclick="signout()">Signout</a></li>
+                                <% } else { %>
+                                <li><a href="/login">Login</a></li>
+                                <% } %>
 							</ul>
 						</nav>
 					</div>
