@@ -25,6 +25,12 @@ module.exports = function(passport) {
       //tags: req.body.tags,
       //users: req.body.users
     }).then(function(game) {
+      req.body.tags.split(" ").forEach(function(title) {
+        models.Tag.findOrCreate({where: {tag: title}})
+          .spread(function(tag, created) {
+            tag.addGame(game);
+          })
+      });
       res.json({success: true, gameId: game.get('id')});
     });
   });
