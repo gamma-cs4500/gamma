@@ -12,8 +12,6 @@ module.exports = function(passport) {
 
   /* POST game */
   router.post('/', passport.isAuthenticated, function(req, res) {
-    var genre, platform, license, tags, users;
-
     models.Game.create({
       name: req.body.name,
       shortDesc: req.body.shortDesc,
@@ -22,15 +20,25 @@ module.exports = function(passport) {
       GenreId: req.body.gameGenre,
       PlatformId: req.body.gamePlatform,
       LicenseId: req.body.gameLicense,
-      //tags: req.body.tags,
-      //users: req.body.users
     }).then(function(game) {
+      // add tag relationships
       req.body.tags.split(" ").forEach(function(title) {
         models.Tag.findOrCreate({where: {tag: title}})
           .spread(function(tag, created) {
             tag.addGame(game);
           })
       });
+
+      // add self as collaborator
+      game.addUser(req.user);
+      // add other users as collaborators
+      req.body.users.split(" ").forEach(function(name) {
+        models.User.find({where: {username: name}})
+          .then(function(user) {
+            game.addUser(user);
+          })
+      });
+
       res.json({success: true, gameId: game.get('id')});
     });
   });

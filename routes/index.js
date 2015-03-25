@@ -74,7 +74,7 @@ function handleGameRequest(params, res) {
     if (params.user === undefined)
       res.redirect(301, '/');
     // Not associated with game
-    params.game.hasUser(user).then(function(hasUser) {
+    params.game.hasUser(params.user).then(function(hasUser) {
       if(!hasUser)
         res.redirect(301, '/');
       else
