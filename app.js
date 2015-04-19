@@ -10,6 +10,7 @@ var localStrategy = require('passport-local').Strategy;
 var flash = require("connect-flash");
 var cors = require('cors');
 var bcrypt = require('bcrypt');
+var multer = require('multer');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use(session({ secret: 'so secret' }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+app.use(multer({ dest: './public/uploads/', putSingleFilesInArray: true}))
 
 var initPassport = require('./lib/auth');
 initPassport(passport);
