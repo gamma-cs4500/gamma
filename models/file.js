@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        File.belongsTo(models.Game);
+        File.belongsToMany(models.Game);
       }
     }
   });

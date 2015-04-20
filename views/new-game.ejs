@@ -35,10 +35,10 @@
 								<li class="active"><a href="/">Home</a></li>
 								<li><a href="/game/new">New Game</a></li>
 								<% if (user !== undefined) { %>
-                                <li><a href="/login" onclick="signout()">Signout</a></li>
-                                <% } else { %>
-                                <li><a href="/login">Login</a></li>
-                                <% } %>
+                <li><a href="/login" onclick="signout()">Signout</a></li>
+                <% } else { %>
+                <li><a href="/login">Login</a></li>
+                <% } %>
 							</ul>
 						</nav>
 					</div>
@@ -50,7 +50,7 @@
 								<h2>New Game</h2>
 								<span class="byline">Share yr game</span>
 							</header>
-              <form class="pure-form pure-form-stacked">
+              <form id="new-game" class="pure-form pure-form-stacked" enctype="multipart/form-data">
                   <fieldset>
                       <legend>Game Info</legend>
                       <input id="name" name="name" type="text" placeholder="Name">
@@ -83,7 +83,7 @@
                       <input id="tags" name="tags" type="text" placeholder="Tags">
                       <input id="users" name="users" type="text" placeholder="Collaborators">
                       <label for="game-files">Game .zip</label>
-                      <input id="game-files" type="file">
+                      <input id="game-files" name="files" type="file">
                       <button type="submit" id="new-game-btn" class="pure-button pure-button-primary">Submit</button>
                   </fieldset>
               </form>
@@ -102,24 +102,16 @@
       function createGame(){
           var base = (window.location.href).split("game");
           var baseUrl = base[0];
-          var title = $('#name').val();
-          var shortDesc = $('#shortdesc').val();
-          var longDesc = $('#longdesc').val();
-          var gameVisibility = $('#game-visibility').val();
-          var gameGenre = $('#game-genre').val();
-          var gamePlatform = $('#game-platform').val();
-          var gameLicense = $('#game-license').val();
-          var tags = $('#tags').val();
-          var users = $('#users').val();
 
-          var data = {name: title, shortDesc: shortDesc, longDesc: longDesc,
-           gameVisibility: gameVisibility, gameGenre: gameGenre,
-           gamePlatform: gamePlatform, gameLicense: gameLicense,
-           tags: tags, users: users}
+          var data = new FormData($('#new-game')[0]);
+
           $.ajax({
               type: "POST",
               url: baseUrl+"api/game",
               data: data,
+              processData: false,
+              cache: false,
+              contentType: false,
               success: function(res){
                   window.location.href = baseUrl + "game/" + res.gameId;
               },
