@@ -47,12 +47,18 @@ module.exports = function(passport) {
         if (game == null)
           res.redirect(301, '/');
 
-        var params = {
-          'game': game,
-          'user': req.user
-        };
+        getSimilarGames(game.Tags, game, [], function (similarGames) {
+          // filter out games that cannot be displayed
+          similarGames = similarGames.filter(function(g)
+                                      {return displayGame(g, req.user)});
+          var params = {
+            'game': game,
+            'user': req.user,
+            'similarGames': similarGames
+          };
 
-        handleGameRequest(params, res);
+          handleGameRequest(params, res);
+        });
       });
     });
   });
@@ -66,6 +72,51 @@ module.exports = function(passport) {
   });
 
   return router;
+}
+
+function getSimilarGames(tags, game, similarGames, next) {
+  if (tags.length === 0) {
+    // Filter out current game
+    similarGames = similarGames.filter(function(g) {return g.id != game.id});
+    // Filter out identical games
+    result = [];
+    ids = [];
+    similarGames.forEach(function (g) {
+      if (ids.indexOf(g.id) == -1) {
+        result.push(g);
+        ids.push(g.id);
+      }
+    });
+    // only first 8 related games
+    return next(result.slice(0, 8));
+  }
+
+  var tag = tags.shift();
+  tag.getGames().then(function(games) {
+    games.forEach(function(game) {
+      if (similarGames.indexOf(game) == -1) {
+        similarGames.push(game);
+      }
+    });
+    getSimilarGames(tags, game, similarGames, next);
+  });
+}
+
+function displayGame(game, user) {
+  if (game.visibility === 'private') {
+    return false;
+  }
+
+  else if (game.visibility === 'neu') {
+    if (user === undefined || !user.hasNEUEmail())
+      return false;
+    else
+      return true;
+  }
+
+  else {
+    return true;
+  }
 }
 
 function handleGameRequest(params, res) {

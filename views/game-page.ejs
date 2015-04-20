@@ -105,6 +105,11 @@
 	                    <li>Genre: <%= game.Genre.name %></li>
 	                    <li>Platform: <%= game.Platform.name %></li>
 	                    <li>License: <%= game.License.type %></li>
+                      <li>Similar games:
+                        <% similarGames.forEach(function(g) { %>
+                          <a href="/game/<%= g.id %>"><%= g.name %></a>
+                        <% }); %>
+                      </li>
 					</ul>
 				</section>
 	                <section>
@@ -116,7 +121,7 @@
 	                    </ul>
 	                </section>
 			</div>
-				
+
 				<!-- Content -->
 				<div id="content" class="8u skel-cell-important">
 					<section>

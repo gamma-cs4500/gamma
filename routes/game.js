@@ -2,10 +2,14 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models');
 
+
+
 module.exports = function(passport) {
   /* GET game */
   router.get('/:id', function(req, res) {
     models.Game.find(req.param('id')).then(function(game) {
+      console.log("cool");
+      var similarGames = getSimilarGames(game);
       res.json(game);
     })
   });
