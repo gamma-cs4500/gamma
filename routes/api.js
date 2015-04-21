@@ -73,17 +73,5 @@ module.exports = function(passport) {
     });
   });
 
-    /* PUT game */
-  router.put('/:id', passport.isOwner, function(req, res) {
-    req.game.updateAttributes({
-      name: req.body.name,
-      shortDesc: req.body.shortDesc,
-      longDesc: req.body.longDesc,
-      visibility: req.body.visibility
-    }).success(function() {
-      res.json({success: true})
-    });
-  });
-
   return router;
 }
