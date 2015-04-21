@@ -14,6 +14,14 @@ var isAuthenticated = function (req, res, next) {
     return res.sendStatus(401);
 }
 
+var genHashSalt = function (req, res, next) {
+  bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.hash(req.body.password, salt, function (err, hash) {
+      next(hash);
+    });
+  });
+}
+
 module.exports = function(passport) {
   router.post('/login', passport.authenticate('login'), function(req, res) {
     res.json({ success: true });
@@ -26,13 +34,10 @@ module.exports = function(passport) {
 
   /* Handle Registration POST */
   router.post('/signup', function(req, res) {
-    bcrypt.genSalt(10, function(err, salt) {
-      bcrypt.hash(req.body.password, salt, function (err, hash) {
-        password_hash = hash;
-
-        models.User.findOrCreate({
+    genHashSalt(req, res, function (hash) {
+      models.User.findOrCreate({
           where: {username: req.body.username},
-          defaults: {username: req.body.username, password: password_hash}
+          defaults: {username: req.body.username, password: hash}
         }).spread(function(user, created) {
           if (!created) {
             res.json({
@@ -46,12 +51,38 @@ module.exports = function(passport) {
             });
           }
         });
-      });
     });
   });
 
   router.get('/self', isAuthenticated, function(req, res) {
       res.json({ user: req.user });
+  });
+
+  router.put('/self', isAuthenticated, function(req, res) {
+    genHashSalt(req, res, function(hash) {
+      if (req.body.password == "" || req.body.password == null) {
+        res.json({success: false});
+      } else {
+        req.user.updateAttributes({
+          username: req.body.username,
+          password: hash
+        }).success(function() {
+          res.json({success: true});
+        });
+      }
+    });
+  });
+
+    /* PUT game */
+  router.put('/:id', passport.isOwner, function(req, res) {
+    req.game.updateAttributes({
+      name: req.body.name,
+      shortDesc: req.body.shortDesc,
+      longDesc: req.body.longDesc,
+      visibility: req.body.visibility
+    }).success(function() {
+      res.json({success: true})
+    });
   });
 
   return router;

@@ -63,12 +63,26 @@ module.exports = function(passport) {
     });
   });
 
+  router.get('/search', function(req, res) {
+    models.Game.findAll({where: {name: {like: '%' + req.query['q'] + '%'}}}).success(function(games) {
+      games = games.filter(function(g) {return displayGame(g, req.user)});
+      res.json(games);
+    });
+  });
+
 
   router.get('/login', function(req, res, next) {
     var params = {
       'user': req.user
     };
     res.render('login', params);
+  });
+
+  router.get('/self', function(req, res) {
+    var params = {
+      'user': req.user
+    };
+    res.render('user', params);
   });
 
   return router;
