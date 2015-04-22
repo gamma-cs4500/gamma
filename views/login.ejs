@@ -137,11 +137,11 @@
           var pass = $('#pass').val();
           $.ajax({
               type: "POST",
-              url: BASE_SERVER_URL+"/api/signup",
+              url: "/api/signup",
               data: {username:user, password:pass},
               success: function(res){
                   if (res.success == true) {
-                    window.location.href=baseUrl;
+                    window.location.href="/";
                   } else {
                     window.location.href = window.location.href + "?";
                   }
