@@ -2,14 +2,20 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models');
 
+function getFileType(ext) {
+  if (['png', 'jpg', 'jpeg'].some(function(v) { v === ext }))
+    return 'img';
+  return 'src';
+}
+
 function addFiles(files, game, next) {
-  if (files.length === 0)
+  if (files === undefined || files.length === 0)
     return next();
 
   var file = files.shift();
   file = {
     'path': file.path,
-    'type': 'src'
+    'type': getFileType(file.extension)
   };
 
   models.File.create(file).then(function(file) {
@@ -19,7 +25,7 @@ function addFiles(files, game, next) {
 }
 
 function addCollaborators(users, game, next) {
-  if (users.length === 0)
+  if (users === undefined || users.length === 0)
     return next();
 
   var user = users.shift();
@@ -30,7 +36,7 @@ function addCollaborators(users, game, next) {
 }
 
 function addTags(tags, game, next) {
-  if (tags.length === 0)
+  if (tags === undefined || tags.length === 0)
     return next();
 
   var tag = tags.shift();
@@ -61,6 +67,7 @@ module.exports = function(passport) {
       shortDesc: req.body.shortdesc,
       longDesc: req.body.longdesc,
       visibility: req.body.visibility,
+      uploadDate: Date.now(),
       GenreId: req.body.genre,
       PlatformId: req.body.platform,
       LicenseId: req.body.license,

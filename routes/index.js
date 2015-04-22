@@ -37,26 +37,31 @@ module.exports = function(passport) {
         {'model': models.Genre},
         {'model': models.Platform},
         {'model': models.License},
-        {'model': models.Tag}
+        {'model': models.Tag},
+        {'model': models.File}
       ]
     };
     models.Game.find(query).then(function(game) {
+      // No such game
+      if (game == null)
+        res.redirect(301, '/');
+
       game.averageRating(function(averageRating) {
         game._averageRating = averageRating.toFixed(2);
-        // No such game
-        if (game == null)
-          res.redirect(301, '/');
 
-        getSimilarGames(game.Tags, game, [], function (similarGames) {
+        getSimilarGames(game.Tags.slice(), game, [], function (similarGames) {
           // filter out games that cannot be displayed
-          similarGames = similarGames.filter(function(g)
-                                      {return displayGame(g, req.user)});
+          similarGames = similarGames.filter(function(g) {
+            return displayGame(g, req.user)
+          });
+          // add game zip
+          addSource(game);
+
           var params = {
             'game': game,
             'user': req.user,
             'similarGames': similarGames
           };
-
           handleGameRequest(params, res);
         });
       });
@@ -160,5 +165,18 @@ function handleGameRequest(params, res) {
   // Public game
   else {
     res.render('game-page', params);
+  }
+}
+
+function addSource(game) {
+  game._source = '#';
+  if (game.Files !== undefined) {
+    for (var i = 0; i < game.Files.length; i++) {
+      var file = game.Files[i];
+      if (file.type === 'src') {
+        game._source = file.path.replace('public', '');
+        break;
+      }
+    }
   }
 }
