@@ -18,6 +18,14 @@ describe('LoginFlow', function () {
             var basel = {username: 'basel', password: bcrypt.hashSync('basel', salt)};
             var ryan = {username: 'ryan', password: bcrypt.hashSync('ryan', salt)};
             models.User.bulkCreate([jamel, basel, ryan]);
+
+            var genres = [{'name': 'Arcade'}, {'name': 'Shooter'}, {'name': 'Puzzle'}];
+            var licenses = [{'type': 'BSD'}, {'name': 'GPL'}, {'name': 'MIT'}];
+            var platforms = [{'type': 'Desktop', 'name': 'PC'}];
+
+            models.Genre.bulkCreate(genres);
+            models.License.bulkCreate(licenses);
+            models.Platform.bulkCreate(platforms);
         })
         .then(done);
   });
@@ -72,10 +80,19 @@ describe('LogoutFlow', function () {
     // Create fake users
     models.sequelize.sync({force: true, logging: false})
         .then(function() {
-            var jamel = {username: 'jamel', password: 'jamel'};
-            var basel = {username: 'basel', password: 'basel'};
-            var ryan = {username: 'ryan', password: 'ryan'};
+            var salt = bcrypt.genSaltSync(10);
+            var jamel = {username: 'jamel', password: bcrypt.hashSync('jamel', salt)};
+            var basel = {username: 'basel', password: bcrypt.hashSync('basel', salt)};
+            var ryan = {username: 'ryan', password: bcrypt.hashSync('ryan', salt)};
             models.User.bulkCreate([jamel, basel, ryan]);
+
+            var genres = [{'name': 'Arcade'}, {'name': 'Shooter'}, {'name': 'Puzzle'}];
+            var licenses = [{'type': 'BSD'}, {'name': 'GPL'}, {'name': 'MIT'}];
+            var platforms = [{'type': 'Desktop', 'name': 'PC'}];
+
+            models.Genre.bulkCreate(genres);
+            models.License.bulkCreate(licenses);
+            models.Platform.bulkCreate(platforms);
         })
         .then(done);
   });
@@ -99,10 +116,19 @@ describe('NewGame', function () {
     // Create fake users
     models.sequelize.sync({force: true, logging: false})
         .then(function() {
-            var jamel = {username: 'jamel', password: 'jamel'};
-            var basel = {username: 'basel@husky.neu.edu', password: 'basel'};
-            var ryan = {username: 'ryan', password: 'ryan'};
+            var salt = bcrypt.genSaltSync(10);
+            var jamel = {username: 'jamel', password: bcrypt.hashSync('jamel', salt)};
+            var basel = {username: 'basel', password: bcrypt.hashSync('basel', salt)};
+            var ryan = {username: 'ryan', password: bcrypt.hashSync('ryan', salt)};
             models.User.bulkCreate([jamel, basel, ryan]);
+
+            var genres = [{'name': 'Arcade'}, {'name': 'Shooter'}, {'name': 'Puzzle'}];
+            var licenses = [{'type': 'BSD'}, {'name': 'GPL'}, {'name': 'MIT'}];
+            var platforms = [{'type': 'Desktop', 'name': 'PC'}];
+
+            models.Genre.bulkCreate(genres);
+            models.License.bulkCreate(licenses);
+            models.Platform.bulkCreate(platforms);
         })
         .then(done);
   });
@@ -110,10 +136,10 @@ describe('NewGame', function () {
   describe('Create new private game', function() {
     it('Should successfully create new private game', function(done) {
       request(app)
-        .post('/game/')
+        .post('/api/game/')
         .send({'name': 'Hardcore', 'shortDesc': 'its Hardcore', 'longDesc': 'its so very Hardocre',
          'visibility': 'private', 'GenreId': '5', 'PlatformId': '1', 'LicenseId': '1'})
-        .res.redirect('/game/:id') // Must figure out proper way to catch a redirect in order to test success
+        .expect(304, done); // Must figure out proper way to catch a redirect in order to test success
     });
   });
 });
@@ -127,26 +153,33 @@ describe('Rating', function () {
     // Create fake users
     models.sequelize.sync({force: true, logging: false})
         .then(function() {
-            var jamel = {username: 'jamel', password: 'jamel'};
-            var basel = {username: 'basel@husky.neu.edu', password: 'basel'};
-            var ryan = {username: 'ryan', password: 'ryan'};
+            var salt = bcrypt.genSaltSync(10);
+            var jamel = {username: 'jamel', password: bcrypt.hashSync('jamel', salt)};
+            var basel = {username: 'basel', password: bcrypt.hashSync('basel', salt)};
+            var ryan = {username: 'ryan', password: bcrypt.hashSync('ryan', salt)};
             models.User.bulkCreate([jamel, basel, ryan]);
 
+            var genres = [{'name': 'Arcade'}, {'name': 'Shooter'}, {'name': 'Puzzle'}];
+            var licenses = [{'type': 'BSD'}, {'name': 'GPL'}, {'name': 'MIT'}];
+            var platforms = [{'type': 'Desktop', 'name': 'PC'}];
+
+            models.Genre.bulkCreate(genres);
+            models.License.bulkCreate(licenses);
+            models.Platform.bulkCreate(platforms);
             var game1 = {name: 'hardcore', shortDesc: 'its hardcore', longDesc: 'very hardcore',
-            visibility: 'private', GenreId: '5', PlatformId: '1', LicenseId: '1'};
-            models.Game.create([game1]);
+            visibility: 'private', GenreId: '1', PlatformId: '1', LicenseId: '1'};
+            models.Game.bulkCreate([game1]);
 
         })
         .then(done);
       });
 
-  describe('Give raiting to game', function() {
+  describe('Give rating to game', function() {
     it ('Should successfully add new rating to game', function(done) {
       request(app)
-      .post('/game/1/rating')
+      .post('/api/game/1/rating')
       .send({'rating': '5', 'GameId': '1', 'UserId': '1'})
-      .expect()
-      // Figure out how to extract rating from database user last entry.
+      .expect(200, done);
     });
   });
 
@@ -154,9 +187,9 @@ describe('Rating', function () {
     it ('Should successfully add new rating to game', function(done) {
       request(app)
       // Figure out how to extract rating from database prior to user rating it
-      .post('/game/1/rating')
+      .post('/api/game/1/rating')
       .send({'rating': '5', 'GameId': '1', 'UserId': '1'})
-      .expect()
+      .expect(200, done);
       // Figure out how to extract rating from database user last entry.
     });
   });
@@ -165,9 +198,9 @@ describe('Rating', function () {
     it ('Should fail to add new rating to game', function(done) {
       // Figure out how to extract rating from database prior to user rating it
       request(app)
-      .post('/game/1/rating')
+      .post('/api/game/1/rating')
       .send({'rating': '5', 'GameId': '1', 'UserId': '1'})
-      .expect()
+      .expect(200, done);
       // Figure out how to extract rating from database user last entry.
     });
   });
@@ -182,14 +215,22 @@ describe('Commenting', function () {
     // Create fake users
     models.sequelize.sync({force: true, logging: false})
         .then(function() {
-            var jamel = {username: 'jamel', password: 'jamel'};
-            var basel = {username: 'basel@husky.neu.edu', password: 'basel'};
-            var ryan = {username: 'ryan', password: 'ryan'};
+            var salt = bcrypt.genSaltSync(10);
+            var jamel = {username: 'jamel', password: bcrypt.hashSync('jamel', salt)};
+            var basel = {username: 'basel', password: bcrypt.hashSync('basel', salt)};
+            var ryan = {username: 'ryan', password: bcrypt.hashSync('ryan', salt)};
             models.User.bulkCreate([jamel, basel, ryan]);
 
+            var genres = [{'name': 'Arcade'}, {'name': 'Shooter'}, {'name': 'Puzzle'}];
+            var licenses = [{'type': 'BSD'}, {'name': 'GPL'}, {'name': 'MIT'}];
+            var platforms = [{'type': 'Desktop', 'name': 'PC'}];
+
+            models.Genre.bulkCreate(genres);
+            models.License.bulkCreate(licenses);
+            models.Platform.bulkCreate(platforms);
             var game1 = {name: 'hardcore', shortDesc: 'its hardcore', longDesc: 'very hardcore',
-            visibility: 'private', GenreId: '5', PlatformId: '1', LicenseId: '1'};
-            models.Game.create([game1]);
+            visibility: 'private', GenreId: '1', PlatformId: '1', LicenseId: '1'};
+            models.Game.bulkCreate([game1]);
 
         })
         .then(done);
@@ -199,9 +240,9 @@ describe('Commenting', function () {
     it ('Should successfully add new rating to game', function(done) {
       request(app)
       // Figure out how to extract rating from database prior to user rating it
-      .post('/game/1/comment')
+      .post('/api/game/1/comment')
       .send({'comment': 'nice game', 'GameId': '1', 'UserId': '1'})
-      .expect()
+      .expect(200, done);
       // Figure out how to extract rating from database user last entry.
     });
   });
