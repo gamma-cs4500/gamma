@@ -162,7 +162,7 @@
 			var comment = $('#comment-field').val();
             $.ajax({
                 type: "POST",
-                url: "http://localhost:3000/api/game/<%= game.id %>/comment",
+                url: "/api/game/<%= game.id %>/comment",
                 data: {
                 	comment: comment,
                 	gameId: <%= game.id %>
@@ -180,7 +180,7 @@
 			var rating = $('input[name=rating]:checked', '#rating-form').val();
             $.ajax({
                 type: "POST",
-                url: "http://localhost:3000/api/game/<%= game.id %>/rating",
+                url: "/api/game/<%= game.id %>/rating",
                 data: {
                 	rating: rating,
                 	gameId: <%= game.id %>

@@ -109,10 +109,10 @@
           var pass = $('#pass').val();
           $.ajax({
               type: "POST",
-              url: BASE_SERVER_URL+"/api/login",
+              url: "/api/login",
               data: {username:user, password:pass},
               success: function(){
-                  window.location.href=baseUrl;
+                  window.location.href="/";
               },
               error: function(){
                   window.location.href = window.location.href + "?";

@@ -107,13 +107,13 @@
 
           $.ajax({
               type: "POST",
-              url: baseUrl+"api/game",
+              url: "/api/game",
               data: data,
               processData: false,
               cache: false,
               contentType: false,
               success: function(res){
-                  window.location.href = baseUrl + "game/" + res.gameId;
+                  window.location.href = "/game/" + res.gameId;
               },
               error: function(){
                   window.location.href = window.location.href + "?";

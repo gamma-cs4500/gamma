@@ -177,10 +177,10 @@
             var pass = $('#pass').val();
             $.ajax({
                 type: "POST",
-                url: BASE_SERVER_URL+"/api/logout",
+                url: "/api/logout",
                 data: {username:user, password:pass},
                 success: function(){
-                    window.location.href=BASE_SERVER_URL;
+                    window.location.href="/";
                 },
                 error: function(){
                 }
